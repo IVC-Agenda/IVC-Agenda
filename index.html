@@ -655,12 +655,14 @@ input:checked + .toggle-slider::before { transform: translateX(18px); }
 // ══════════════════════════════════════════════════════════════════
 var BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyfejUoRv3-JgTkz1UiQ3m85fD4JFedJ7LWNrAfD4SPboTpVl7XB_1IdA37zYLnEWYziQ/exec';
 
-// Servicios disponibles con duración en minutos
-var SERVICIOS = [
-  { id: 'valoracion',   icon: '🔍', nombre: 'Consulta de Valoración',       dur: 60, desc: '60 min · Primera evaluación' },
-  { id: 'paquete',      icon: '✨', nombre: 'Consulta + Limpieza',           dur: 60, desc: '60 min · Evaluación y profilaxis' },
-  { id: 'limpieza',     icon: '🪥', nombre: 'Limpieza / Profilaxis',         dur: 60, desc: '60 min · Limpieza profesional' },
-  { id: 'control',      icon: '📋', nombre: 'Consulta / Control',            dur: 45, desc: '45 min · Seguimiento de tratamiento' },
+// Servicios por tipo de paciente
+var SERVICIOS_NUEVO = [
+  { id: 'valoracion', icon: '🔍', nombre: 'Consulta de Valoración',    dur: 60, desc: '60 min · Evaluación inicial completa' },
+  { id: 'paquete',    icon: '✨', nombre: 'Paquete Consulta + Limpieza', dur: 60, desc: '60 min · Evaluación y profilaxis' },
+];
+var SERVICIOS_EXISTENTE = [
+  { id: 'limpieza',   icon: '🪥', nombre: 'Limpieza / Profilaxis', dur: 60, desc: '60 min · Limpieza profesional' },
+  { id: 'consulta',   icon: '📋', nombre: 'Consulta / Control',    dur: 45, desc: '45 min · Seguimiento de tratamiento' },
 ];
 
 // UTM params
@@ -760,7 +762,7 @@ function cargarDisponibilidad() {
   var cont = document.getElementById('dispContainer');
   cont.innerHTML = '<div class="spinner-wrap"><div class="spinner"></div><div class="spinner-label">Consultando disponibilidad...</div></div>';
 
-  var url = BACKEND_URL + '?action=disponibilidad&fecha=' + fecha;
+  var url = BACKEND_URL + '?accion=disponibilidad&fecha=' + fecha;
   fetch(url)
     .then(function(r) { return r.json(); })
     .then(function(data) { renderSlots(data); })
@@ -907,7 +909,7 @@ function confirmarCita() {
   var tratamiento = estado.servicio ? estado.servicio.nombre + '---' + durMin + 'min' : 'Consulta---30min';
 
   var params = new URLSearchParams({
-    action:      'guardar',
+    accion:      'guardarCita',
     fecha:       estado.fecha,
     hora:        estado.hora,
     sillon:      estado.sillon,
