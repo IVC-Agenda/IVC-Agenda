@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#C41E3A">
+<meta name="description" content="Agenda tu cita en la Clínica de la Dra. Ingrid Vargas — IVC Dental, Panamá">
+<title>Agendar Cita — IVC Dental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --rojo:      #C41E3A;
+  --rojo-deep: #9B1530;
+  --rojo-soft: #FEF0F2;
+  --teal:      #1A4A4A;
+  --teal-mid:  #2E7D7D;
+  --teal-soft: #E8F5F5;
+  --negro:     #1A1A1A;
+  --gris-1:    #F8F7F5;
+  --gris-2:    #EDECEA;
+  --gris-3:    #B8B4AE;
+  --gris-4:    #6B6864;
+  --blanco:    #FFFFFF;
+  --exito:     #2E7D52;
+  --exito-bg:  #E8F5E9;
+  --warn:      #E65100;
+  --warn-bg:   #FFF3E0;
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  --radio:    10px;
+  --radio-lg: 16px;
+  --sombra:   0 2px 16px rgba(26,26,26,0.07);
+  --sombra-lg: 0 8px 32px rgba(26,26,26,0.12);
+  --trans:    all 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--gris-1);
+  color: var(--negro);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── HEADER ─── */
+.header {
+  background: var(--teal);
+  padding: 16px 20px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.header-tooth { font-size: 1.4rem; }
+.header-text { flex: 1; }
+.header-clinic {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--blanco);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+}
+.header-sub {
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.header-badge {
+  background: var(--rojo);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* ─── PROGRESO ─── */
+.progress-bar {
+  background: var(--teal-mid);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.step-dot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.3);
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.65rem;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--trans);
+  flex-shrink: 0;
+}
+.step-dot.active { border-color: white; background: white; color: var(--teal); }
+.step-dot.done   { border-color: white; background: var(--rojo); color: white; }
+.step-line {
+  flex: 1; height: 2px;
+  background: rgba(255,255,255,0.2);
+  transition: var(--trans);
+}
+.step-line.done { background: var(--rojo); }
+.step-label {
+  display: none; /* shown on wider screens */
+}
+
+/* ─── CONTENIDO ─── */
+.content {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+}
+
+/* ─── CARD ─── */
+.card {
+  background: var(--blanco);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.card-header {
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid var(--gris-2);
+}
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--teal);
+  line-height: 1.2;
+}
+.card-subtitle {
+  font-size: 0.78rem;
+  color: var(--gris-4);
+  margin-top: 3px;
+}
+.card-body { padding: 16px 20px 20px; }
+
+/* ─── BOTONES DE TIPO (paso 1) ─── */
+.tipo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+.tipo-btn {
+  border: 2px solid var(--gris-2);
+  border-radius: var(--radio);
+  padding: 16px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--trans);
+  background: var(--blanco);
+  color: var(--negro);
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.tipo-btn:active { transform: scale(0.97); }
+.tipo-btn.selected {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+}
+.tipo-icon { font-size: 1.6rem; margin-bottom: 6px; }
+.tipo-label { font-size: 0.82rem; font-weight: 500; color: var(--teal); }
+.tipo-desc  { font-size: 0.7rem; color: var(--gris-4); margin-top: 2px; }
+
+/* ─── SERVICIOS (paso 2) ─── */
+.servicio-list { display: flex; flex-direction: column; gap: 8px; }
+.servicio-btn {
+  border: 2px solid var(--gris-2);
+  border-radius: var(--radio);
+  padding: 12px 16px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 12px;
+  transition: var(--trans);
+  background: var(--blanco);
+  -webkit-tap-highlight-color: transparent;
+}
+.servicio-btn:active { transform: scale(0.98); }
+.servicio-btn.selected { border-color: var(--teal); background: var(--teal-soft); }
+.servicio-icon { font-size: 1.3rem; flex-shrink: 0; }
+.servicio-text { flex: 1; text-align: left; }
+.servicio-name { font-size: 0.9rem; font-weight: 500; color: var(--teal); }
+.servicio-dur  { font-size: 0.72rem; color: var(--gris-4); margin-top: 1px; }
+.servicio-check {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--gris-3);
+  flex-shrink: 0;
+  transition: var(--trans);
+  display: flex; align-items: center; justify-content: center;
+}
+.servicio-btn.selected .servicio-check {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: white;
+  font-size: 0.65rem;
+}
+
+/* ─── CALENDAR (paso 3) ─── */
+.fecha-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--gris-2);
+  border-radius: var(--radio);
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  color: var(--negro);
+  background: var(--blanco);
+  transition: var(--trans);
+  appearance: none;
+  -webkit-appearance: none;
+}
+.fecha-input:focus { outline: none; border-color: var(--teal); }
+
+.slots-section { margin-top: 16px; }
+.slots-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--gris-4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.slot {
+  border: 2px solid var(--gris-2);
+  border-radius: 8px;
+  padding: 7px 4px;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--blanco);
+  color: var(--teal);
+  transition: var(--trans);
+  -webkit-tap-highlight-color: transparent;
+}
+.slot:active:not(.ocupado) { transform: scale(0.94); }
+.slot.libre:hover  { border-color: var(--teal); background: var(--teal-soft); }
+.slot.selected     { border-color: var(--teal); background: var(--teal); color: white; }
+.slot.ocupado      { background: var(--gris-2); color: var(--gris-3); cursor: not-allowed; text-decoration: line-through; border-color: transparent; }
+.slot.bloqueado-dur { background: var(--warn-bg); color: var(--warn); border-color: #FFCC80; cursor: not-allowed; }
+
+.sillon-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--teal-mid);
+  margin: 14px 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sillon-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--gris-2);
+}
+
+.no-disponibilidad {
+  text-align: center;
+  padding: 24px 16px;
+  color: var(--gris-4);
+  font-size: 0.85rem;
+}
+.no-disponibilidad .icon { font-size: 2rem; margin-bottom: 8px; }
+
+/* ─── FORM (paso 4) ─── */
+.form-field { margin-bottom: 14px; }
+.form-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--gris-4);
+  margin-bottom: 5px;
+  letter-spacing: 0.03em;
+}
+.form-input, .form-select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 2px solid var(--gris-2);
+  border-radius: var(--radio);
+  font-size: 0.92rem;
+  font-family: var(--font-body);
+  color: var(--negro);
+  background: var(--blanco);
+  transition: var(--trans);
+  appearance: none;
+  -webkit-appearance: none;
+}
+.form-input:focus, .form-select:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(46,125,125,0.1);
+}
+.form-input::placeholder { color: var(--gris-3); }
+.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6864' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.wa-toggle-row {
+  display: flex; align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 2px solid var(--gris-2);
+  border-radius: var(--radio);
+  margin-bottom: 14px;
+}
+.wa-toggle-text { flex: 1; font-size: 0.82rem; color: var(--gris-4); }
+.toggle-wrap { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+.toggle-wrap input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; cursor: pointer; inset: 0;
+  background: var(--gris-2); border-radius: 22px; transition: .25s;
+}
+.toggle-slider::before {
+  content: ''; position: absolute;
+  height: 16px; width: 16px;
+  left: 3px; bottom: 3px;
+  background: white; border-radius: 50%; transition: .25s;
+}
+input:checked + .toggle-slider { background: var(--rojo); }
+input:checked + .toggle-slider::before { transform: translateX(18px); }
+
+/* ─── RESUMEN (paso 5) ─── */
+.resumen-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gris-2);
+}
+.resumen-item:last-child { border-bottom: none; }
+.resumen-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+.resumen-key { font-size: 0.72rem; color: var(--gris-4); text-transform: uppercase; letter-spacing: 0.08em; }
+.resumen-val { font-size: 0.92rem; font-weight: 500; color: var(--teal); margin-top: 1px; }
+
+.deposito-box {
+  background: var(--rojo-soft, #FEF0F2);
+  border: 1px solid #F8C4CB;
+  border-radius: var(--radio);
+  padding: 14px 16px;
+  margin: 16px 0 0;
+}
+.deposito-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--rojo);
+  margin-bottom: 4px;
+}
+.deposito-desc {
+  font-size: 0.78rem;
+  color: var(--gris-4);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.btn-deposito {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: var(--rojo);
+  color: white;
+  border: none;
+  border-radius: var(--radio);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-family: var(--font-body);
+  transition: var(--trans);
+}
+.btn-deposito:hover { background: var(--rojo-deep); }
+
+.confirmado-banner {
+  background: var(--exito-bg);
+  border: 1px solid #A5D6A7;
+  border-radius: var(--radio);
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.confirmado-icon { font-size: 2.2rem; margin-bottom: 6px; }
+.confirmado-title { font-size: 1rem; font-weight: 600; color: var(--exito); }
+.confirmado-sub { font-size: 0.78rem; color: var(--gris-4); margin-top: 4px; }
+
+/* ─── BOTONES DE ACCIÓN ─── */
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: var(--teal);
+  color: white;
+  border: none;
+  border-radius: var(--radio);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: var(--trans);
+  margin-top: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-primary:hover   { background: var(--teal-mid); }
+.btn-primary:active  { transform: scale(0.98); }
+.btn-primary:disabled { background: var(--gris-3); cursor: not-allowed; }
+
+.btn-secondary {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  color: var(--gris-4);
+  border: 2px solid var(--gris-2);
+  border-radius: var(--radio);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: var(--trans);
+  margin-top: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-secondary:hover { border-color: var(--gris-3); color: var(--negro); }
+
+/* ─── ALERTA / AVISO ─── */
+.aviso {
+  border-radius: var(--radio);
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.aviso.info { background: var(--teal-soft); color: var(--teal); border: 1px solid #B2DFDB; }
+.aviso.warn { background: var(--warn-bg); color: var(--warn); border: 1px solid #FFCC80; }
+.aviso.err  { background: #FFEBEE; color: #C62828; border: 1px solid #EF9A9A; }
+.aviso.nl   { background: #FFEBEE; color: #B71C1C; border: 1px solid #EF9A9A; }
+.aviso-icon { flex-shrink: 0; }
+
+/* ─── SPINNER ─── */
+.spinner-wrap { text-align: center; padding: 28px; }
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--gris-2);
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 10px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner-label { font-size: 0.82rem; color: var(--gris-4); }
+
+/* ─── PANTALLAS ─── */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ─── FOOTER ─── */
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.72rem;
+  color: var(--gris-3);
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-tooth">🦷</div>
+  <div class="header-text">
+    <div class="header-clinic">IVC Dental</div>
+    <div class="header-sub">Dra. Ingrid Vargas · Panamá</div>
+  </div>
+  <div class="header-badge">Agenda en línea</div>
+</div>
+
+<div class="progress-bar" id="progressBar">
+  <div class="step-dot active" id="dot1">1</div>
+  <div class="step-line" id="line1"></div>
+  <div class="step-dot" id="dot2">2</div>
+  <div class="step-line" id="line2"></div>
+  <div class="step-dot" id="dot3">3</div>
+  <div class="step-line" id="line3"></div>
+  <div class="step-dot" id="dot4">4</div>
+  <div class="step-line" id="line4"></div>
+  <div class="step-dot" id="dot5">5</div>
+</div>
+
+<div class="content">
+
+<!-- ══════════════ PASO 1: Tipo de paciente ══════════════ -->
+<div class="screen active" id="screen1">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">¿Es tu primera vez con nosotros?</div>
+      <div class="card-subtitle">Selecciona la opción que aplica</div>
+    </div>
+    <div class="card-body">
+      <div class="tipo-grid">
+        <div class="tipo-btn" id="tipo-nuevo" onclick="seleccionarTipo('nuevo')">
+          <div class="tipo-icon">🌟</div>
+          <div class="tipo-label">Primera vez</div>
+          <div class="tipo-desc">Soy paciente nuevo</div>
+        </div>
+        <div class="tipo-btn" id="tipo-existente" onclick="seleccionarTipo('existente')">
+          <div class="tipo-icon">👤</div>
+          <div class="tipo-label">Ya soy paciente</div>
+          <div class="tipo-desc">Tengo historial aquí</div>
+        </div>
+      </div>
+      <button class="btn-primary" id="btn1" onclick="irPaso(2)" disabled>Continuar →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PASO 2: Servicio ══════════════ -->
+<div class="screen" id="screen2">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">¿Qué servicio necesitas?</div>
+      <div class="card-subtitle">Selecciona el motivo de tu visita</div>
+    </div>
+    <div class="card-body">
+      <div class="servicio-list" id="servicioList"></div>
+      <button class="btn-primary" id="btn2" onclick="irPaso(3)" disabled>Continuar →</button>
+      <button class="btn-secondary" onclick="irPaso(1)">← Volver</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PASO 3: Fecha y hora ══════════════ -->
+<div class="screen" id="screen3">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Elige fecha y hora</div>
+      <div class="card-subtitle">Disponibilidad en tiempo real</div>
+    </div>
+    <div class="card-body">
+      <div class="form-field">
+        <label class="form-label">Fecha de la cita</label>
+        <input type="date" class="fecha-input" id="fechaCita" onchange="cargarDisponibilidad()" />
+      </div>
+      <div id="dispContainer"></div>
+      <button class="btn-primary" id="btn3" onclick="irPaso(4)" disabled>Continuar →</button>
+      <button class="btn-secondary" onclick="irPaso(2)">← Volver</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PASO 4: Datos personales ══════════════ -->
+<div class="screen" id="screen4">
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Tus datos de contacto</div>
+      <div class="card-subtitle">Para confirmar y recordarte la cita</div>
+    </div>
+    <div class="card-body">
+      <div class="form-field">
+        <label class="form-label">Nombre completo *</label>
+        <input type="text" class="form-input" id="pacNombre" placeholder="Nombre y apellido" autocomplete="name" />
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Teléfono *</label>
+          <input type="tel" class="form-input" id="pacTel" placeholder="6000-0000" autocomplete="tel" />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Correo (opcional)</label>
+          <input type="email" class="form-input" id="pacEmail" placeholder="correo@email.com" autocomplete="email" />
+        </div>
+      </div>
+      <div class="wa-toggle-row">
+        <div class="wa-toggle-text">📵 Mi número no tiene WhatsApp</div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="sinWA" />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Notas adicionales (opcional)</label>
+        <input type="text" class="form-input" id="pacNotas" placeholder="Ej: alergia a la penicilina, referido por…" />
+      </div>
+      <div id="errDatos" class="aviso err" style="display:none">
+        <span class="aviso-icon">⚠️</span>
+        <span id="errDatosMsg"></span>
+      </div>
+      <button class="btn-primary" id="btn4" onclick="confirmarCita()">Confirmar cita →</button>
+      <button class="btn-secondary" onclick="irPaso(3)">← Volver</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PASO 5: Confirmación ══════════════ -->
+<div class="screen" id="screen5">
+  <div class="confirmado-banner">
+    <div class="confirmado-icon">✅</div>
+    <div class="confirmado-title">¡Cita registrada!</div>
+    <div class="confirmado-sub">Te contactaremos para confirmar</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Resumen de tu cita</div>
+    </div>
+    <div class="card-body">
+      <div id="resumenContent"></div>
+
+      <div class="deposito-box">
+        <div class="deposito-title">Asegura tu cita — Depósito opcional</div>
+        <div class="deposito-desc">
+          Realiza un depósito de <strong>B/.10</strong> para reservar tu espacio con prioridad.
+          Se aplica como descuento en tu primera visita.
+        </div>
+        <a href="https://checkout.baccredomatic.com/NDk3NmY2MTNhMTllMjA1NzU3MWIuYjIxNzgxMTAxNjYy"
+           target="_blank" class="btn-deposito">
+          💳 Pagar depósito B/.10
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Clínica Dra. Ingrid Vargas · IVC Dental · Panamá<br>
+    <span style="color:var(--gris-3)">© 2025 · Todos los derechos reservados</span>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+// CONFIGURACIÓN
+// ══════════════════════════════════════════════════════════════════
+var BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyfejUoRv3-JgTkz1UiQ3m85fD4JFedJ7LWNrAfD4SPboTpVl7XB_1IdA37zYLnEWYziQ/exec';
+
+// Servicios por tipo de paciente
+var SERVICIOS_NUEVO = [
+  { id: 'valoracion', icon: '🔍', nombre: 'Consulta de Valoración',    dur: 60, desc: '60 min · Evaluación inicial completa' },
+  { id: 'paquete',    icon: '✨', nombre: 'Paquete Consulta + Limpieza', dur: 60, desc: '60 min · Evaluación y profilaxis' },
+];
+var SERVICIOS_EXISTENTE = [
+  { id: 'limpieza',   icon: '🪥', nombre: 'Limpieza / Profilaxis', dur: 60, desc: '60 min · Limpieza profesional' },
+  { id: 'consulta',   icon: '📋', nombre: 'Consulta / Control',    dur: 45, desc: '45 min · Seguimiento de tratamiento' },
+];
+
+// UTM params
+var UTM = {};
+(function() {
+  var p = new URLSearchParams(window.location.search);
+  ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(function(k) {
+    if (p.get(k)) UTM[k] = p.get(k);
+  });
+})();
+
+// Estado global
+var estado = {
+  paso: 1,
+  tipo: null,           // 'nuevo' | 'existente'
+  servicio: null,       // objeto de SERVICIOS
+  fecha: null,          // 'YYYY-MM-DD'
+  hora: null,           // 'HH:mm'
+  sillon: null,         // 'Sillón 1' | ...
+  datosDisp: null,
+};
+
+// ── Navegación ────────────────────────────────────────────────────
+function irPaso(n) {
+  if (n < 1 || n > 5) return;
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('screen' + n).classList.add('active');
+  estado.paso = n;
+  actualizarProgreso(n);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (n === 2) renderServicios();
+}
+
+function actualizarProgreso(paso) {
+  for (var i = 1; i <= 5; i++) {
+    var dot  = document.getElementById('dot' + i);
+    var line = i < 5 ? document.getElementById('line' + i) : null;
+    dot.className  = 'step-dot ' + (i < paso ? 'done' : i === paso ? 'active' : '');
+    dot.textContent = i < paso ? '✓' : String(i);
+    if (line) line.className = 'step-line ' + (i < paso ? 'done' : '');
+  }
+}
+
+// ── PASO 1: Tipo ──────────────────────────────────────────────────
+function seleccionarTipo(tipo) {
+  estado.tipo = tipo;
+  document.getElementById('tipo-nuevo').classList.toggle('selected', tipo === 'nuevo');
+  document.getElementById('tipo-existente').classList.toggle('selected', tipo === 'existente');
+  document.getElementById('btn1').disabled = false;
+}
+
+// ── PASO 2: Servicios ─────────────────────────────────────────────
+function renderServicios() {
+  var lista = document.getElementById('servicioList');
+  lista.innerHTML = '';
+  var servicios = estado.tipo === 'nuevo' ? SERVICIOS_NUEVO : SERVICIOS_EXISTENTE;
+  servicios.forEach(function(s) {
+    var div = document.createElement('div');
+    div.className = 'servicio-btn' + (estado.servicio && estado.servicio.id === s.id ? ' selected' : '');
+    div.innerHTML =
+      '<div class="servicio-icon">' + s.icon + '</div>' +
+      '<div class="servicio-text"><div class="servicio-name">' + s.nombre + '</div><div class="servicio-dur">' + s.desc + '</div></div>' +
+      '<div class="servicio-check">' + (estado.servicio && estado.servicio.id === s.id ? '✓' : '') + '</div>';
+    div.onclick = (function(srv) { return function() { seleccionarServicio(srv); }; })(s);
+    lista.appendChild(div);
+  });
+}
+
+function seleccionarServicio(srv) {
+  estado.servicio = srv;
+  renderServicios();
+  document.getElementById('btn2').disabled = false;
+}
+
+// ── PASO 3: Fecha y slots ─────────────────────────────────────────
+(function() {
+  var hoy = new Date();
+  var min = new Date(hoy);
+  min.setDate(hoy.getDate() + 1);
+  var max = new Date(hoy);
+  max.setDate(hoy.getDate() + 15);
+  var fmt = function(d) {
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  };
+  var inp = document.getElementById('fechaCita');
+  inp.min = fmt(min);
+  inp.max = fmt(max);
+})();
+
+function cargarDisponibilidad() {
+  var fecha = document.getElementById('fechaCita').value;
+  if (!fecha) return;
+  estado.fecha = fecha;
+  estado.hora  = null;
+  estado.sillon = null;
+  document.getElementById('btn3').disabled = true;
+
+  var cont = document.getElementById('dispContainer');
+  cont.innerHTML = '<div class="spinner-wrap"><div class="spinner"></div><div class="spinner-label">Consultando disponibilidad...</div></div>';
+
+  var url = BACKEND_URL + '?accion=disponibilidad&fecha=' + fecha;
+  fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(data) { renderSlots(data); })
+    .catch(function() {
+      cont.innerHTML = '<div class="aviso err"><span class="aviso-icon">⚠️</span><span>Error consultando disponibilidad. Intenta de nuevo.</span></div>';
+    });
+}
+
+function renderSlots(data) {
+  var cont = document.getElementById('dispContainer');
+  cont.innerHTML = '';
+
+  if (data.esNL) {
+    cont.innerHTML = '<div class="aviso nl"><span class="aviso-icon">🔒</span><span>Este día no es laborable. Por favor elige otra fecha.</span></div>';
+    return;
+  }
+
+  // Backend devuelve: { ok, fecha, sillon, esSabado, slots:[{hora,horaFin}], libres:[{hora,horaFin}] }
+  var libres = data.libres || data.slots || [];
+
+  if (!libres.length) {
+    cont.innerHTML = '<div class="no-disponibilidad"><div class="icon">📅</div>No hay disponibilidad en esta fecha.<br>Prueba con otra fecha.</div>';
+    return;
+  }
+
+  if (data.notaDia) {
+    var av = document.createElement('div');
+    av.className = 'aviso warn';
+    av.innerHTML = '<span class="aviso-icon">📌</span><span>' + data.notaDia + '</span>';
+    cont.appendChild(av);
+  }
+
+  var sillon = data.sillon || 'Sillón 1';
+  var horasLibres = libres.map(function(s) { return s.hora; });
+  var amSlots = horasLibres.filter(function(h) { return parseInt(h) < 12; });
+  var pmSlots = horasLibres.filter(function(h) { return parseInt(h) >= 12; });
+
+  var grid = document.createElement('div');
+  grid.className = 'slots-grid';
+
+  function addGroup(slots, label) {
+    if (!slots.length) return;
+    var lbEl = document.createElement('div');
+    lbEl.className = 'slots-label';
+    lbEl.style.gridColumn = '1 / -1';
+    lbEl.textContent = label;
+    grid.appendChild(lbEl);
+    slots.forEach(function(h) {
+      var s = document.createElement('div');
+      s.className = 'slot libre' + (estado.hora === h ? ' selected' : '');
+      s.textContent = formatAMPM(h);
+      s.dataset.hora = h;
+      s.dataset.sillon = sillon;
+      s.onclick = (function(hora, sil, el) {
+        return function() { seleccionarSlot(hora, sil, el); };
+      })(h, sillon, s);
+      grid.appendChild(s);
+    });
+  }
+
+  addGroup(amSlots, 'Mañana');
+  addGroup(pmSlots, 'Tarde');
+
+  if (!amSlots.length && !pmSlots.length) {
+    cont.innerHTML = '<div class="no-disponibilidad"><div class="icon">📅</div>Sin horarios disponibles.<br>Prueba con otra fecha.</div>';
+    return;
+  }
+
+  cont.appendChild(grid);
+}
+
+function seleccionarSlot(hora, sillon, el) {
+  document.querySelectorAll('.slot.selected').forEach(function(s) { s.classList.remove('selected'); });
+  el.classList.add('selected');
+  estado.hora   = hora;
+  estado.sillon = sillon;
+  document.getElementById('btn3').disabled = false;
+}
+
+function calcSlotsAfectados(horaInicio, durMin) {
+  var slots = [];
+  var p = horaInicio.split(':');
+  var h = parseInt(p[0]); var m = parseInt(p[1]);
+  var total = h * 60 + m; var cant = Math.ceil(durMin / 15);
+  for (var i = 0; i < cant; i++) {
+    var t = total + i * 15; var hh = Math.floor(t/60); var mm = t%60;
+    slots.push((hh<10?'0':'')+hh+':'+(mm===0?'00':(mm<10?'0'+mm:String(mm))));
+  }
+  return slots;
+}
+
+function formatAMPM(hora24) {
+  var p = hora24.split(':'); var h = parseInt(p[0]); var m = p[1];
+  var ampm = h >= 12 ? 'pm' : 'am';
+  var h12 = h % 12 || 12;
+  return h12 + ':' + m + ' ' + ampm;
+}
+
+// ── PASO 4: Datos + Guardar ───────────────────────────────────────
+function confirmarCita() {
+  var nombre = document.getElementById('pacNombre').value.trim();
+  var tel    = document.getElementById('pacTel').value.trim();
+  var err    = document.getElementById('errDatos');
+  var errMsg = document.getElementById('errDatosMsg');
+
+  if (!nombre) {
+    errMsg.textContent = 'Por favor ingresa tu nombre completo.';
+    err.style.display = 'flex'; return;
+  }
+  if (!tel) {
+    errMsg.textContent = 'Por favor ingresa tu número de teléfono.';
+    err.style.display = 'flex'; return;
+  }
+  err.style.display = 'none';
+
+  var btn = document.getElementById('btn4');
+  btn.disabled = true; btn.textContent = 'Guardando cita…';
+
+  var durMin = estado.servicio ? estado.servicio.dur : 30;
+  var tratamiento = estado.servicio ? estado.servicio.nombre + '---' + durMin + 'min' : 'Consulta---30min';
+
+  var params = new URLSearchParams({
+    accion:      'guardarCita',
+    fecha:       estado.fecha,
+    hora:        estado.hora,
+    sillon:      estado.sillon,
+    paciente:    nombre,
+    telefono:    tel,
+    email:       document.getElementById('pacEmail').value.trim(),
+    sinWA:       document.getElementById('sinWA').checked ? 'true' : 'false',
+    notas:       document.getElementById('pacNotas').value.trim(),
+    tratamiento: tratamiento,
+    tipo:        estado.tipo,
+    marca:       '🌐 AUTOAGENDADO',
+    agendadoPor: 'Web',
+  });
+  if (UTM.utm_source)   params.set('utm_source',   UTM.utm_source);
+  if (UTM.utm_campaign) params.set('utm_campaign',  UTM.utm_campaign);
+
+  fetch(BACKEND_URL + '?' + params.toString())
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      btn.disabled = false; btn.textContent = 'Confirmar cita →';
+      if (data.ok) {
+        mostrarConfirmacion(nombre, tel);
+      } else {
+        errMsg.textContent = data.error || 'Ocurrió un error. Por favor intenta de nuevo.';
+        err.style.display = 'flex';
+      }
+    })
+    .catch(function() {
+      btn.disabled = false; btn.textContent = 'Confirmar cita →';
+      errMsg.textContent = 'Error de conexión. Verifica tu internet e intenta de nuevo.';
+      err.style.display = 'flex';
+    });
+}
+
+function mostrarConfirmacion(nombre, tel) {
+  var fechaDisplay = (function() {
+    var p = estado.fecha.split('-');
+    var meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    return parseInt(p[2]) + ' de ' + meses[parseInt(p[1])-1] + ' de ' + p[0];
+  })();
+  var horaDisplay = formatAMPM(estado.hora);
+  var primer = nombre.split(' ')[0];
+
+  var resumen = document.getElementById('resumenContent');
+  resumen.innerHTML = [
+    { icon: '👤', key: 'Nombre',      val: nombre },
+    { icon: '📞', key: 'Teléfono',    val: tel },
+    { icon: '🦷', key: 'Servicio',    val: estado.servicio ? estado.servicio.nombre : '—' },
+    { icon: '📅', key: 'Fecha',       val: fechaDisplay },
+    { icon: '🕐', key: 'Hora',        val: horaDisplay },
+    { icon: '🪑', key: 'Sillón',      val: estado.sillon },
+  ].map(function(item) {
+    return '<div class="resumen-item"><div class="resumen-icon">' + item.icon + '</div>' +
+      '<div><div class="resumen-key">' + item.key + '</div><div class="resumen-val">' + item.val + '</div></div></div>';
+  }).join('');
+
+  irPaso(5);
+}
+
+</script>
+</body>
+</html>
