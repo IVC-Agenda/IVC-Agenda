@@ -435,24 +435,19 @@ async function seleccionarFecha(fechaStr, celdaEl) {
   document.getElementById('errorFecha').classList.remove('visible');
 const cacheKey = fechaStr + '_' + estado.servicio.id;
 let slots;
-try {
-  const resp = await fetch(WEB_APP_URL + '?accion=disponibilidad&fecha=' + fechaStr + '&servicio=' + estado.servicio.id);
-  const data = await resp.json();
-  slots = data.libres || [];
-} catch(e) {
-  contenido.innerHTML = '<div class="slots-vacio">Error al cargar. Intenta de nuevo.</div>';
-  return;
-}
-    try {
-      const resp = await fetch(WEB_APP_URL + '?accion=disponibilidad&fecha=' + fechaStr + '&servicio=' + estado.servicio.id);
-      const data = await resp.json();
-      slots = data.libres || [];
-      estado.slotsCache[cacheKey] = slots;
-    } catch(e) {
-      contenido.innerHTML = '<div class="slots-vacio">Error al cargar. Intenta de nuevo.</div>';
-      return;
-    }
+if (estado.slotsCache[cacheKey]) {
+  slots = estado.slotsCache[cacheKey];
+} else {
+  try {
+    const resp = await fetch(WEB_APP_URL + '?accion=disponibilidad&fecha=' + fechaStr + '&servicio=' + estado.servicio.id);
+    const data = await resp.json();
+    slots = data.libres || [];
+    estado.slotsCache[cacheKey] = slots;
+  } catch(e) {
+    contenido.innerHTML = '<div class="slots-vacio">Error al cargar. Intenta de nuevo.</div>';
+    return;
   }
+}
   if (slots.length === 0) {
     contenido.innerHTML = '<div class="slots-vacio">Sin disponibilidad para este día.<br>Selecciona otra fecha.</div>';
     return;
