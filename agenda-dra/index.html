@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Citas · Dra. Ingrid Vargas</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+:root {
+  --teal:       #1B6B5E;
+  --teal-mid:   #2A8A78;
+  --teal-pale:  #E4F0EE;
+  --teal-dark:  #134E45;
+  --gold:       #C4903A;
+  --gold-pale:  #FBF3E3;
+  --coral:      #D95F42;
+  --coral-pale: #FCEEE9;
+  --slate:      #3C4B5C;
+  --slate-mid:  #6B7A8D;
+  --slate-pale: #EEF1F5;
+  --cream:      #F5F1EC;
+  --white:      #FFFFFF;
+  --text:       #1C2730;
+  --border:     #DDE3EA;
+  --blocked:    #F0F0F0;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(160deg, var(--teal-dark) 0%, var(--teal) 100%);
+  padding: 52px 20px 18px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+.brand h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.4px;
+  line-height: 1.1;
+}
+.brand p {
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 3px;
+  letter-spacing: 0.3px;
+}
+.refresh-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.refresh-btn:active { background: rgba(255,255,255,0.25); transform: rotate(180deg); }
+
+/* DATE NAV */
+.date-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.date-nav-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 15px;
+  color: rgba(255,255,255,0.9);
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.date-nav-btn:active { background: rgba(255,255,255,0.25); }
+.date-display {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+}
+.date-display .date-main {
+  font-family: 'Fraunces', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.2px;
+}
+.date-display .date-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  margin-top: 1px;
+}
+.today-pill {
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.today-pill:active { background: rgba(255,255,255,0.3); }
+
+/* SUMMARY BAR */
+.summary-bar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex;
+  gap: 0;
+}
+.summary-stat {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+.summary-stat + .summary-stat::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 1px;
+  background: var(--border);
+}
+.summary-stat .s-num {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+}
+.summary-stat .s-num.teal { color: var(--teal); }
+.summary-stat .s-num.gold { color: var(--gold); }
+.summary-stat .s-num.coral { color: var(--coral); }
+.summary-stat .s-label {
+  font-size: 10px;
+  color: var(--slate-mid);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* CONTENT */
+.content { padding: 16px 16px 80px; }
+
+/* FILTER TABS */
+.filters {
+  display: flex;
+  gap: 7px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 1px;
+}
+.filters::-webkit-scrollbar { display: none; }
+.ftab {
+  flex-shrink: 0;
+  padding: 6px 13px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--slate-mid);
+  background: var(--white);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.ftab.active {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: var(--teal-pale);
+  font-weight: 600;
+}
+
+/* SECTION HEADER */
+.section-header {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--slate-mid);
+  margin: 20px 0 10px 2px;
+}
+
+/* CITA CARD */
+.cita-card {
+  background: var(--white);
+  border-radius: 16px;
+  border: 1.5px solid var(--border);
+  margin-bottom: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+  cursor: pointer;
+}
+.cita-card:active { box-shadow: 0 3px 14px rgba(0,0,0,0.1); }
+
+.cita-main {
+  display: flex;
+  gap: 0;
+}
+.cita-time-col {
+  width: 68px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 8px;
+  border-right: 1.5px solid var(--border);
+  background: var(--slate-pale);
+}
+.cita-time-col .hora {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--slate);
+  line-height: 1;
+}
+.cita-time-col .ampm {
+  font-size: 10px;
+  color: var(--slate-mid);
+  font-weight: 500;
+  margin-top: 2px;
+}
+.cita-time-col .sillon-tag {
+  margin-top: 6px;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--slate-mid);
+  letter-spacing: 0.3px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.cita-body {
+  flex: 1;
+  padding: 12px 14px;
+  position: relative;
+}
+.cita-body::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 10%; bottom: 10%;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+}
+.cita-card.tipo-ingrid .cita-body::before { background: var(--teal); }
+.cita-card.tipo-profilaxis .cita-body::before { background: var(--gold); }
+.cita-card.tipo-especialista .cita-body::before { background: var(--coral); }
+.cita-card.tipo-bloqueado .cita-body::before { background: var(--border); }
+
+.cita-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.paciente-nombre {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.25;
+  flex: 1;
+}
+.cita-card.tipo-bloqueado .paciente-nombre {
+  color: var(--slate-mid);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.status-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.status-asistio { background: #E4F5EC; color: #2A7D4F; }
+.status-pendiente { background: var(--gold-pale); color: var(--gold); }
+.status-bloqueado { background: var(--slate-pale); color: var(--slate-mid); }
+.status-cancelado { background: #FCEEE9; color: var(--coral); }
+
+.tratamiento-text {
+  font-size: 12.5px;
+  color: var(--slate-mid);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.doctor-text {
+  font-size: 11.5px;
+  color: var(--slate-mid);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.doctor-text span { opacity: 0.7; }
+
+/* EXPANDED DETAIL */
+.cita-detail {
+  display: none;
+  border-top: 1.5px solid var(--border);
+  padding: 12px 14px;
+  background: var(--slate-pale);
+}
+.cita-card.expanded .cita-detail { display: block; }
+.detail-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  color: var(--slate);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.detail-row:last-child { margin-bottom: 0; }
+.detail-icon { font-size: 14px; flex-shrink: 0; margin-top: 0px; }
+.detail-label { font-weight: 600; color: var(--slate-mid); font-size: 10.5px; display: block; margin-bottom: 1px; letter-spacing: 0.3px; }
+
+/* EMPTY / LOADING */
+.state-box {
+  text-align: center;
+  padding: 52px 24px;
+}
+.state-icon { font-size: 44px; margin-bottom: 14px; }
+.state-box h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 19px;
+  color: var(--slate);
+  margin-bottom: 7px;
+}
+.state-box p { font-size: 13px; color: var(--slate-mid); line-height: 1.5; }
+
+/* LOADING SPINNER */
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* LAST UPDATED */
+.last-updated {
+  text-align: center;
+  font-size: 11px;
+  color: var(--slate-mid);
+  margin-top: 20px;
+  padding: 10px;
+}
+
+/* FAB */
+.fab {
+  position: fixed;
+  bottom: 22px;
+  right: 18px;
+  background: var(--teal);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(27,107,94,0.4);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 200;
+  transition: all 0.2s;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+.fab.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+.fab:active { transform: scale(0.95); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-row">
+    <div class="brand">
+      <h1>Citas · Dra. Ingrid Vargas</h1>
+      <p>IVC Dental · Agenda en tiempo real</p>
+    </div>
+    <div class="refresh-btn" onclick="cargarCitas()" title="Actualizar">↻</div>
+  </div>
+  <div class="date-nav">
+    <div class="date-nav-btn" onclick="cambiarDia(-1)">‹</div>
+    <div class="date-display" onclick="irAHoy()">
+      <div class="date-main" id="fechaDisplay">—</div>
+      <div class="date-sub" id="fechaSub">Cargando...</div>
+    </div>
+    <div class="date-nav-btn" onclick="cambiarDia(1)">›</div>
+    <div class="today-pill" onclick="irAHoy()">Hoy</div>
+  </div>
+</div>
+
+<div class="summary-bar" id="summaryBar" style="display:none">
+  <div class="summary-stat">
+    <div class="s-num teal" id="statTotal">0</div>
+    <div class="s-label">Citas</div>
+  </div>
+  <div class="summary-stat">
+    <div class="s-num gold" id="statPendientes">0</div>
+    <div class="s-label">Pendientes</div>
+  </div>
+  <div class="summary-stat">
+    <div class="s-num coral" id="statEsp">0</div>
+    <div class="s-label">Especialistas</div>
+  </div>
+</div>
+
+<div class="content">
+  <div id="filtros" style="display:none">
+    <div class="filters" id="filterTabs"></div>
+  </div>
+  <div id="vistaAgenda"></div>
+  <div class="last-updated" id="lastUpdated"></div>
+</div>
+
+<button class="fab" id="fab" onclick="irAHoy()">↑ Hoy</button>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbymjnLhLdyYscnTU1b9Bl7zUM3jbz_Qv-m_ia8Kw8QYo_2Rx5LwLp4endLMG9AWZe6BHQ/exec';
+
+const DIAS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+let fechaActual = new Date();
+let citasData = [];
+let filtroActivo = 'todos';
+let cargando = false;
+
+function fechaStr(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function esHoy(d) {
+  const hoy = new Date();
+  return d.getFullYear()===hoy.getFullYear() && d.getMonth()===hoy.getMonth() && d.getDate()===hoy.getDate();
+}
+
+function formatHora(h) {
+  if (!h || h === '') return '--:--';
+  const [hh, mm] = h.split(':').map(Number);
+  const suffix = hh < 12 ? 'AM' : 'PM';
+  const h12 = hh % 12 || 12;
+  return { h: `${h12}:${String(mm).padStart(2,'0')}`, suffix };
+}
+
+function actualizarHeader() {
+  const d = fechaActual;
+  document.getElementById('fechaDisplay').textContent =
+    `${DIAS[d.getDay()]} ${d.getDate()}`;
+  document.getElementById('fechaSub').textContent =
+    `${MESES[d.getMonth()]} ${d.getFullYear()}${esHoy(d) ? ' · Hoy' : ''}`;
+}
+
+function tipoCita(cita) {
+  if (cita.tipo === 'BLOQUEO' || cita.status === 'Bloqueado') return 'bloqueado';
+  const doc = (cita.doctor || '').toLowerCase();
+  const trat = (cita.tratamiento || '').toLowerCase();
+  if (doc.includes('asist') || trat.includes('profilaxis') || trat.includes('limpieza')) return 'profilaxis';
+  if (doc.includes('dra. ingrid') || doc.includes('ingrid') || doc === '') return 'ingrid';
+  return 'especialista';
+}
+
+function getStatusBadge(status, tipo) {
+  if (tipo === 'bloqueado') return '<span class="status-badge status-bloqueado">Bloqueado</span>';
+  if (!status) return '<span class="status-badge status-pendiente">Pendiente</span>';
+  const s = status.toLowerCase();
+  if (s.includes('asistió') || s.includes('asistio')) return '<span class="status-badge status-asistio">Asistió ✓</span>';
+  if (s.includes('cancel')) return '<span class="status-badge status-cancelado">Cancelado</span>';
+  return `<span class="status-badge status-pendiente">${status}</span>`;
+}
+
+function limpiarTratamiento(t) {
+  return (t || '').replace(/---\d+min/g, '').replace(/--\d+min/g, '').trim();
+}
+
+function renderCitas(citas) {
+  const vista = document.getElementById('vistaAgenda');
+  const filtros = document.getElementById('filtros');
+  const summaryBar = document.getElementById('summaryBar');
+
+  const citasReales = citas.filter(c => tipoCita(c) !== 'bloqueado');
+  const bloqueadas = citas.filter(c => tipoCita(c) === 'bloqueado');
+
+  // Stats
+  summaryBar.style.display = 'flex';
+  document.getElementById('statTotal').textContent = citasReales.length;
+  document.getElementById('statPendientes').textContent =
+    citasReales.filter(c => {
+      const s = (c.status||'').toLowerCase();
+      return !s.includes('asistió') && !s.includes('asistio') && !s.includes('cancel');
+    }).length;
+  document.getElementById('statEsp').textContent =
+    citasReales.filter(c => tipoCita(c) === 'especialista').length;
+
+  if (citas.length === 0) {
+    filtros.style.display = 'none';
+    summaryBar.style.display = 'none';
+    vista.innerHTML = `
+      <div class="state-box">
+        <div class="state-icon">🦷</div>
+        <h3>Sin citas</h3>
+        <p>No hay citas registradas para este día.</p>
+      </div>`;
+    return;
+  }
+
+  // Filtros
+  filtros.style.display = 'block';
+  const tipos = [
+    { k: 'todos', label: `Todas (${citasReales.length})` },
+    { k: 'ingrid', label: 'Dra. Ingrid' },
+    { k: 'profilaxis', label: 'Profilaxis' },
+    { k: 'especialista', label: 'Especialistas' },
+  ];
+  document.getElementById('filterTabs').innerHTML = tipos.map(t =>
+    `<div class="ftab ${filtroActivo===t.k?'active':''}" onclick="setFiltro('${t.k}')">${t.label}</div>`
+  ).join('');
+
+  // Filtrar
+  let citasFiltradas = filtroActivo === 'todos'
+    ? citasReales
+    : citasReales.filter(c => tipoCita(c) === filtroActivo);
+
+  if (citasFiltradas.length === 0) {
+    vista.innerHTML = `
+      <div class="state-box">
+        <div class="state-icon">🔍</div>
+        <h3>Sin resultados</h3>
+        <p>No hay citas para este filtro hoy.</p>
+      </div>`;
+    return;
+  }
+
+  // Render cards
+  const cards = citasFiltradas.map((c, idx) => {
+    const tipo = tipoCita(c);
+    const { h, suffix } = formatHora(c.hora);
+    const trat = limpiarTratamiento(c.tratamiento);
+    const status = getStatusBadge(c.status, tipo);
+    const docLabel = c.doctor || 'Dra. Ingrid Vargas';
+
+    const detalle = tipo !== 'bloqueado' ? `
+      <div class="cita-detail">
+        ${c.tratamiento ? `<div class="detail-row"><span class="detail-icon">🦷</span><div><span class="detail-label">TRATAMIENTO</span>${limpiarTratamiento(c.tratamiento)}</div></div>` : ''}
+        ${c.doctor ? `<div class="detail-row"><span class="detail-icon">👩‍⚕️</span><div><span class="detail-label">DOCTOR</span>${c.doctor}</div></div>` : ''}
+        ${c.telefono ? `<div class="detail-row"><span class="detail-icon">📞</span><div><span class="detail-label">TELÉFONO</span>${c.telefono}</div></div>` : ''}
+        ${c.notas ? `<div class="detail-row"><span class="detail-icon">📋</span><div><span class="detail-label">NOTAS</span>${c.notas}</div></div>` : ''}
+      </div>` : '';
+
+    return `
+      <div class="cita-card tipo-${tipo}" onclick="toggleCard(this)">
+        <div class="cita-main">
+          <div class="cita-time-col">
+            <div class="hora">${h}</div>
+            <div class="ampm">${suffix}</div>
+            <div class="sillon-tag">${c.sillon || ''}</div>
+          </div>
+          <div class="cita-body">
+            <div class="cita-top">
+              <div class="paciente-nombre">${tipo === 'bloqueado' ? 'Espacio bloqueado' : (c.paciente || 'Sin nombre')}</div>
+              ${status}
+            </div>
+            ${trat && tipo !== 'bloqueado' ? `<div class="tratamiento-text">${trat}</div>` : ''}
+            ${tipo !== 'bloqueado' && tipo !== 'ingrid' ? `<div class="doctor-text"><span>👩‍⚕️</span>${docLabel}</div>` : ''}
+          </div>
+        </div>
+        ${detalle}
+      </div>`;
+  }).join('');
+
+  // Bloqueados al final si hay
+  const bloqSection = bloqueadas.length > 0 && filtroActivo === 'todos' ? `
+    <div class="section-header">Espacios bloqueados</div>
+    ${bloqueadas.map(c => {
+      const { h, suffix } = formatHora(c.hora);
+      return `
+        <div class="cita-card tipo-bloqueado">
+          <div class="cita-main">
+            <div class="cita-time-col">
+              <div class="hora">${h}</div>
+              <div class="ampm">${suffix}</div>
+              <div class="sillon-tag">${c.sillon||''}</div>
+            </div>
+            <div class="cita-body">
+              <div class="cita-top">
+                <div class="paciente-nombre">Espacio bloqueado</div>
+                <span class="status-badge status-bloqueado">Bloqueado</span>
+              </div>
+              ${c.tratamiento ? `<div class="tratamiento-text">${limpiarTratamiento(c.tratamiento)}</div>` : ''}
+            </div>
+          </div>
+        </div>`;
+    }).join('')}` : '';
+
+  vista.innerHTML = `<div class="section-header">Citas del día</div>` + cards + bloqSection;
+}
+
+function toggleCard(card) {
+  card.classList.toggle('expanded');
+}
+
+function setFiltro(f) {
+  filtroActivo = f;
+  renderCitas(citasData);
+}
+
+async function cargarCitas() {
+  if (cargando) return;
+  cargando = true;
+
+  actualizarHeader();
+
+  const vista = document.getElementById('vistaAgenda');
+  const summaryBar = document.getElementById('summaryBar');
+  const filtros = document.getElementById('filtros');
+
+  summaryBar.style.display = 'none';
+  filtros.style.display = 'none';
+  vista.innerHTML = `
+    <div class="state-box">
+      <div class="spinner"></div>
+      <h3>Cargando agenda...</h3>
+      <p>Consultando en tiempo real</p>
+    </div>`;
+
+  try {
+    const url = `${SCRIPT_URL}?fecha=${fechaStr(fechaActual)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    citasData = data.citas || [];
+    renderCitas(citasData);
+
+    const now = new Date();
+    document.getElementById('lastUpdated').textContent =
+      `Actualizado: ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+  } catch (err) {
+    vista.innerHTML = `
+      <div class="state-box">
+        <div class="state-icon">⚠️</div>
+        <h3>Error de conexión</h3>
+        <p>No se pudo conectar con la agenda.<br>Verificá tu conexión y tocá ↻ para reintentar.</p>
+      </div>`;
+  }
+
+  cargando = false;
+}
+
+function cambiarDia(delta) {
+  fechaActual.setDate(fechaActual.getDate() + delta);
+  filtroActivo = 'todos';
+  cargarCitas();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function irAHoy() {
+  fechaActual = new Date();
+  filtroActivo = 'todos';
+  cargarCitas();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// FAB visibility
+window.addEventListener('scroll', () => {
+  document.getElementById('fab').classList.toggle('visible', window.scrollY > 200);
+});
+
+// Init
+cargarCitas();
+</script>
+</body>
+</html>
