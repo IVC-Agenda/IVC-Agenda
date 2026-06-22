@@ -239,7 +239,10 @@ body {
       <input class="campo-input" id="inputEmail" type="email" placeholder="Ej. maria@email.com" autocomplete="email">
       <div class="campo-error" id="errEmail">Por favor ingresa un correo válido</div>
     </div>
-    <div class="resumen-box" id="resumenCita"></div>
+    <div class="campo-grupo">
+  <label class="campo-label">Indicaciones para la doctora (opcional)</label>
+  <textarea class="campo-input" id="inputNotas" rows="3" placeholder="Ej. Soy alérgico a la penicilina, vengo referido por..."></textarea>
+</div>
     <div id="errorFormulario" class="alerta-error"></div>
     <button class="btn-primario" id="btnConfirmar" data-action="confirmar">
       <span class="btn-texto">Confirmar cita</span>
@@ -285,7 +288,7 @@ const SERVICIOS = {
   ],
   existente: [
     { id: 'limpieza_profilaxis', nombre: 'Limpieza / Profilaxis',  desc: 'Limpieza dental profesional',                    precio: '', icono: '🦷', duracion: 60 },
-    { id: 'consulta_control',   nombre: 'Consulta / Control',     desc: 'Evaluación o seguimiento de tratamiento',        precio: '', icono: '📋', duracion: 45 },
+    { id: 'consulta_control',   nombre: 'Consulta y/o Control',     desc: 'Evaluación o seguimiento de tratamiento',        precio: '', icono: '📋', duracion: 60 },
   ],
 };
 
@@ -301,7 +304,7 @@ const estado = {
   slotsCache: {},
 };
 
-const CONFIG_CLIENTE = { DIAS_VENTANA: 15 };
+const CONFIG_CLIENTE = { DIAS_VENTANA: 30 };
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
 // ── Navegación ──────────────────────────────────────────────
