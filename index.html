@@ -240,9 +240,9 @@ body {
       <div class="campo-error" id="errEmail">Por favor ingresa un correo válido</div>
     </div>
     <div class="campo-grupo">
-  <label class="campo-label">Indicaciones para la doctora (opcional)</label>
-  <textarea class="campo-input" id="inputNotas" rows="3" placeholder="Ej. Soy alérgico a la penicilina, vengo referido por..."></textarea>
-</div>
+      <label class="campo-label">Indicaciones para la doctora (opcional)</label>
+      <textarea class="campo-input" id="inputNotas" rows="3" placeholder="Ej. Soy alérgico a la penicilina, vengo referido por..."></textarea>
+    </div>
     <div class="resumen-box" id="resumenCita"></div>
     <div id="errorFormulario" class="alerta-error"></div>
     <button class="btn-primario" id="btnConfirmar" data-action="confirmar">
@@ -266,8 +266,8 @@ body {
       <div class="pago-box" style="margin-top:16px;text-align:left;">
         <div class="pago-titulo">💳 ¿Quieres asegurar tu cita con un abono?</div>
         <p class="pago-desc">Tu cita ya está guardada. Si quieres, haz un abono de <strong>$10 ahora</strong> — ese monto te quedará como descuento el día de tu visita.<br>Completamente opcional.</p>
-        <a id="linkBAC" href="https://checkout.baccredomatic.com/NDk3NmY2MTNhMTllMjA1NzU3MWIuYjIxNzgxMTAxNjYy" target="_blank" class="btn-bac">Abonar $10 con BAC Credomatic →</a>
-        <p style="font-size:0.70rem;color:var(--gris-4);text-align:center;margin-top:8px;">Si no abonás ahora, puedes pagar el día de tu cita sin problema</p>
+        <a id="linkBAC" href="https://checkout.baccredomatic.com/NDk3NmY2MTNhMTllMjA1NzU3MWIuYjIxNzgxMTAxNjYy" target="_blank" class="btn-bac">Abonar $10 con tarjeta (Visa / Mastercard) →</a>
+        <p style="font-size:0.70rem;color:var(--gris-4);text-align:center;margin-top:8px;">Si abonás, envíanos la captura al <a href="https://wa.me/50768463895" target="_blank" style="color:var(--rojo-deep);font-weight:600;">WhatsApp de la clínica</a> para registrar tu pago. Si preferís, podés pagar el día de tu cita sin problema.</p>
       </div>
     </div>
   </section>
@@ -437,21 +437,21 @@ async function seleccionarFecha(fechaStr, celdaEl) {
   const contenido = document.getElementById('slotsContenido');
   contenido.innerHTML = '<div class="slots-cargando">Verificando disponibilidad…</div>';
   document.getElementById('errorFecha').classList.remove('visible');
-const cacheKey = fechaStr + '_' + estado.servicio.id;
-let slots;
-if (estado.slotsCache[cacheKey]) {
-  slots = estado.slotsCache[cacheKey];
-} else {
-  try {
-    const resp = await fetch(WEB_APP_URL + '?accion=disponibilidad&fecha=' + fechaStr + '&servicio=' + estado.servicio.id);
-    const data = await resp.json();
-    slots = data.libres || [];
-    estado.slotsCache[cacheKey] = slots;
-  } catch(e) {
-    contenido.innerHTML = '<div class="slots-vacio">Error al cargar. Intenta de nuevo.</div>';
-    return;
+  const cacheKey = fechaStr + '_' + estado.servicio.id;
+  let slots;
+  if (estado.slotsCache[cacheKey]) {
+    slots = estado.slotsCache[cacheKey];
+  } else {
+    try {
+      const resp = await fetch(WEB_APP_URL + '?accion=disponibilidad&fecha=' + fechaStr + '&servicio=' + estado.servicio.id);
+      const data = await resp.json();
+      slots = data.libres || [];
+      estado.slotsCache[cacheKey] = slots;
+    } catch(e) {
+      contenido.innerHTML = '<div class="slots-vacio">Error al cargar. Intenta de nuevo.</div>';
+      return;
+    }
   }
-}
   if (slots.length === 0) {
     contenido.innerHTML = '<div class="slots-vacio">Sin disponibilidad para este día.<br>Selecciona otra fecha.</div>';
     return;
@@ -524,6 +524,7 @@ async function confirmarCita() {
     cedula:       document.getElementById('inputCedula').value.trim(),
     telefono:     document.getElementById('inputTelefono').value.trim(),
     email:        document.getElementById('inputEmail').value.trim(),
+    notas:        document.getElementById('inputNotas').value.trim(),
   };
   try {
     const params = new URLSearchParams();
