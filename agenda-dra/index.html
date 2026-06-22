@@ -307,12 +307,28 @@ body {
   flex-shrink: 0;
   white-space: nowrap;
 }
-.status-asistio { background: #E4F5EC; color: #2A7D4F; }
-.status-pendiente { background: var(--gold-pale); color: var(--gold); }
-.status-bloqueado { background: var(--slate-pale); color: var(--slate-mid); }
-.status-cancelado { background: #FCEEE9; color: var(--coral); }
+/* Status badges — mapa completo */
+.status-asistio       { background: #E4F5EC; color: #2A7D4F; }          /* verde suave */
+.status-en-consulta   { background: #E3F0FF; color: #1A5FA8; }          /* azul suave */
+.status-esperando     { background: #FFF8E1; color: #8A6B00; }          /* ámbar suave */
+.status-confirmada    { background: #D6F0E8; color: #1B6B5E; }          /* teal suave */
+.status-reprogramada  { background: #FFF0E0; color: #B05C00; }          /* naranja suave */
+.status-no-confirmada { background: var(--slate-pale); color: var(--slate-mid); } /* gris neutro */
+.status-reprogramar   { background: #FFF0E0; color: #B05C00; }          /* naranja suave */
+.status-pendiente     { background: var(--gold-pale); color: var(--gold); }
+.status-bloqueado     { background: var(--slate-pale); color: var(--slate-mid); }
+.status-cancelado     { background: #FCEEE9; color: var(--coral); }
 
-.tratamiento-text {
+/* Color en columna de hora según status */
+.cita-card.status-asistio       .cita-time-col { background: #E4F5EC; }
+.cita-card.status-en-consulta   .cita-time-col { background: #E3F0FF; }
+.cita-card.status-esperando     .cita-time-col { background: #FFF8E1; }
+.cita-card.status-confirmada    .cita-time-col { background: #D6F0E8; }
+.cita-card.status-reprogramada  .cita-time-col { background: #FFF0E0; }
+.cita-card.status-reprogramar   .cita-time-col { background: #FFF0E0; }
+.cita-card.status-cancelado     .cita-time-col { background: #FCEEE9; }
+
+
   font-size: 12.5px;
   color: var(--slate-mid);
   line-height: 1.4;
@@ -505,8 +521,14 @@ function getStatusBadge(status, tipo) {
   if (tipo === 'bloqueado') return '<span class="status-badge status-bloqueado">Bloqueado</span>';
   if (!status) return '<span class="status-badge status-pendiente">Pendiente</span>';
   const s = status.toLowerCase();
-  if (s.includes('asistió') || s.includes('asistio')) return '<span class="status-badge status-asistio">Asistió ✓</span>';
-  if (s.includes('cancel')) return '<span class="status-badge status-cancelado">Cancelado</span>';
+  if (s.includes('asistió') || s.includes('asistio'))  return '<span class="status-badge status-asistio">Asistió ✓</span>';
+  if (s.includes('en consulta'))                        return '<span class="status-badge status-en-consulta">En Consulta</span>';
+  if (s.includes('esperando'))                          return '<span class="status-badge status-esperando">En Sala</span>';
+  if (s === 'cita confirmada' || s === 'confirmada')    return '<span class="status-badge status-confirmada">Confirmada ✓</span>';
+  if (s.includes('reprogramada'))                       return '<span class="status-badge status-reprogramada">Reprogramada</span>';
+  if (s === 'reprogramar')                              return '<span class="status-badge status-reprogramar">Reprogramar</span>';
+  if (s.includes('no confirmada') || s === 'no asiste') return '<span class="status-badge status-no-confirmada">No Confirmada</span>';
+  if (s.includes('cancel'))                             return '<span class="status-badge status-cancelado">Cancelada</span>';
   return `<span class="status-badge status-pendiente">${status}</span>`;
 }
 
@@ -577,8 +599,22 @@ function renderCitas(citas) {
     const tipo = tipoCita(c);
     const { h, suffix } = formatHora(c.hora);
     const trat = limpiarTratamiento(c.tratamiento);
-    const status = getStatusBadge(c.status, tipo);
+    const statusBadge = getStatusBadge(c.status, tipo);
     const docLabel = c.doctor || 'Dra. Ingrid Vargas';
+
+    // Clase de status para colorear la columna de hora
+    const statusClass = (() => {
+      if (tipo === 'bloqueado') return '';
+      const s = (c.status || '').toLowerCase();
+      if (s.includes('asistió') || s.includes('asistio')) return 'status-asistio';
+      if (s.includes('en consulta'))   return 'status-en-consulta';
+      if (s.includes('esperando'))     return 'status-esperando';
+      if (s === 'cita confirmada' || s === 'confirmada') return 'status-confirmada';
+      if (s.includes('reprogramada'))  return 'status-reprogramada';
+      if (s === 'reprogramar')         return 'status-reprogramar';
+      if (s.includes('cancel'))        return 'status-cancelado';
+      return '';
+    })();
 
     const detalle = tipo !== 'bloqueado' ? `
       <div class="cita-detail">
@@ -589,7 +625,7 @@ function renderCitas(citas) {
       </div>` : '';
 
     return `
-      <div class="cita-card tipo-${tipo}" onclick="toggleCard(this)">
+      <div class="cita-card tipo-${tipo} ${statusClass}" onclick="toggleCard(this)">
         <div class="cita-main">
           <div class="cita-time-col">
             <div class="hora">${h}</div>
@@ -599,7 +635,7 @@ function renderCitas(citas) {
           <div class="cita-body">
             <div class="cita-top">
               <div class="paciente-nombre">${tipo === 'bloqueado' ? 'Espacio bloqueado' : (c.paciente || 'Sin nombre')}</div>
-              ${status}
+              ${statusBadge}
             </div>
             ${trat && tipo !== 'bloqueado' ? `<div class="tratamiento-text">${trat}</div>` : ''}
             ${tipo !== 'bloqueado' && tipo !== 'ingrid' ? `<div class="doctor-text"><span>👩‍⚕️</span>${docLabel}</div>` : ''}
