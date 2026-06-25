@@ -261,16 +261,59 @@
 <!-- Nav -->
 <div class="nav-scroll">
   <div class="nav-inner">
-    <a href="#pestanas" class="nav-pill active">Las pestañas</a>
+    <a href="#manana" class="nav-pill active">Primera tarea</a>
+    <a href="#pestanas" class="nav-pill">Las pestañas</a>
     <a href="#agendar" class="nav-pill">Agendar cita</a>
     <a href="#bloquear" class="nav-pill">Bloqueos</a>
     <a href="#salida" class="nav-pill">Citas de salida</a>
     <a href="#recordatorios" class="nav-pill">Recordatorios WA</a>
+    <a href="#calendario" class="nav-pill">Calendario</a>
   </div>
 </div>
 
 <!-- Content -->
 <div class="content">
+
+  <!-- ── Primera tarea del día ── -->
+  <div class="section" id="manana">
+    <div class="section-head">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </div>
+      <div>
+        <div class="section-title">Primera tarea del día</div>
+        <div class="section-sub">Antes de atender a nadie — revisa los autoagendados.</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Abre la Agenda Google y ve a la pestaña <strong>AGENDA</strong> o <strong>LISTADO DE CITAS.</strong></p>
+          <div class="sub">Busca citas con el ícono 🌐 o con la nota "Autoagendado online".</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Por cada paciente autoagendado, <strong>ábrelo en Dentalink y agéndalo también allí.</strong></p>
+          <div class="sub">Usa los datos que aparecen en la Agenda Google: nombre, tratamiento, hora y sillón.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num">3</div><div class="step-line last"></div></div>
+        <div class="step-card">
+          <p>No muevas ni edites la cita en la Agenda Google — solo agrégala a Dentalink.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert coral">
+      <div class="alert-icon">⚠️</div>
+      <p>Los pacientes pueden autoagendarse en cualquier momento, incluyendo durante la noche. Si no revisas en la mañana, Dentalink queda desincronizado y la doctora no ve esa cita en su sistema clínico.</p>
+    </div>
+  </div>
 
   <!-- ── Pestañas ── -->
   <div class="section" id="pestanas">
@@ -373,12 +416,19 @@
       <div class="step">
         <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
         <div class="step-card">
-          <p>Llena los campos: <strong>Paciente, Tratamiento, Doctor, Sillón, Teléfono.</strong></p>
+          <p>En el campo <strong>Paciente</strong>, busca el nombre usando la lupa o el desplegable.</p>
+          <div class="sub">⚠️ No escribas el nombre directamente — el campo no filtra por texto. Usa siempre el desplegable o la búsqueda para seleccionar al paciente de la lista.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num">5</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Llena los campos restantes: <strong>Tratamiento, Doctor, Sillón, Teléfono.</strong></p>
           <div class="sub">El campo "Notas / Alertas" es libre — úsalo para información relevante del paciente.</div>
         </div>
       </div>
       <div class="step">
-        <div class="step-left"><div class="step-num">5</div><div class="step-line last"></div></div>
+        <div class="step-left"><div class="step-num">6</div><div class="step-line last"></div></div>
         <div class="step-card">
           <p>Haz clic en <strong>Guardar cita.</strong></p>
           <div class="sub">La cita aparece en AGENDA y en Listado de Citas de inmediato.</div>
@@ -519,6 +569,47 @@
     <div class="alert amber">
       <div class="alert-icon">⚠️</div>
       <p>Los recordatorios se envían el día anterior, preferiblemente entre 3 pm y 6 pm. No enviar después de las 8 pm.</p>
+    </div>
+  </div>
+
+  <!-- ── Calendario ── -->
+  <div class="section" id="calendario">
+    <div class="section-head">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+      </div>
+      <div>
+        <div class="section-title">Cómo registrar sábados y feriados</div>
+        <div class="section-sub">Para que la agenda no ofrezca esos días a los pacientes.</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-left"><div class="step-num amber">1</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Ve a la pestaña <strong>CALENDARIO</strong> en la Agenda Google.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num amber">2</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Agrega una fila con la <strong>fecha</strong>, el <strong>motivo</strong> y una nota visible.</p>
+          <div class="sub">Ej: fecha 05/07/2026 · Motivo: No se labora · Nota: Sábado no laborable</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num amber">3</div><div class="step-line last"></div></div>
+        <div class="step-card">
+          <p>La agenda detecta automáticamente esos días y los bloquea para el autoagendamiento web.</p>
+          <div class="sub">No es necesario hacer nada más — basta con registrar la fecha aquí.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert amber">
+      <div class="alert-icon">📅</div>
+      <p>Hay <strong>2 sábados por mes</strong> que no se laboran. Regístralos al inicio de cada mes para que los pacientes no puedan agendar en esas fechas desde la web.</p>
     </div>
   </div>
 
