@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instructivo Recepción — IVC Dental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #1B3A5C;
+    --teal:    #2E7D8C;
+    --teal-lt: #E8F4F1;
+    --teal-md: #C2E0DC;
+    --bg:      #F7F9FC;
+    --white:   #FFFFFF;
+    --gray1:   #6B7A8D;
+    --gray2:   #C8D0DC;
+    --gray3:   #EEF1F5;
+    --amber:   #C47A1A;
+    --amber-lt:#FEF3E2;
+    --coral:   #E05A4E;
+    --coral-lt:#FEF0EF;
+    --green:   #2E7D55;
+    --green-lt:#E8F5EF;
+    --text:    #1A2636;
+    --radius:  10px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── Header ── */
+  .top-bar {
+    background: var(--navy);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .back-link {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 13px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .back-link svg { width: 16px; height: 16px; stroke: currentColor; }
+  .back-link:hover { color: white; }
+  .top-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.2); }
+  .top-role {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--teal-lt);
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--teal);
+    padding: 2rem 1.5rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -30px; right: -20px;
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .hero-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.65);
+    margin-bottom: 8px;
+  }
+  .hero h1 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-weight: 300; color: white; line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .hero h1 strong { font-weight: 600; }
+  .hero p { font-size: 13px; color: rgba(255,255,255,0.7); max-width: 380px; }
+
+  /* ── Nav pills ── */
+  .nav-scroll {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray2);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav-scroll::-webkit-scrollbar { display: none; }
+  .nav-inner {
+    display: flex; gap: 0; padding: 0 1rem;
+    white-space: nowrap;
+    min-width: max-content;
+  }
+  .nav-pill {
+    display: inline-block;
+    padding: 10px 16px;
+    font-size: 13px; font-weight: 500;
+    color: var(--gray1);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .nav-pill:hover { color: var(--teal); }
+  .nav-pill.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+  /* ── Content ── */
+  .content {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 4rem;
+  }
+
+  /* ── Section ── */
+  .section { margin-bottom: 2.5rem; scroll-margin-top: 100px; }
+
+  .section-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 1rem;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray2);
+  }
+  .section-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--teal-lt);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-icon svg { width: 17px; height: 17px; stroke: var(--teal); fill: none; stroke-width: 2; }
+  .section-title { font-size: 15px; font-weight: 600; color: var(--navy); }
+  .section-sub { font-size: 12px; color: var(--gray1); margin-top: 1px; }
+
+  /* ── Steps ── */
+  .steps { position: relative; padding-left: 0; }
+
+  .step {
+    display: flex; gap: 0; position: relative; margin-bottom: 4px;
+  }
+
+  /* The vertical line + number column */
+  .step-left {
+    display: flex; flex-direction: column; align-items: center;
+    width: 36px; flex-shrink: 0;
+  }
+  .step-num {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--teal); color: white;
+    font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; z-index: 1;
+  }
+  .step-num.amber { background: var(--amber); }
+  .step-num.coral { background: var(--coral); }
+  .step-num.green { background: var(--green); }
+  .step-num.auto  { background: var(--navy); font-size: 10px; }
+  .step-line {
+    width: 1px; flex: 1; background: var(--teal-md);
+    margin-top: 3px; margin-bottom: 3px; min-height: 12px;
+  }
+  .step-line.last { display: none; }
+
+  /* The content card */
+  .step-card {
+    flex: 1;
+    background: var(--white);
+    border: 1px solid var(--gray2);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    margin-left: 8px;
+  }
+  .step-card p { font-size: 14px; color: var(--text); line-height: 1.5; }
+  .step-card .sub { font-size: 12px; color: var(--gray1); margin-top: 3px; line-height: 1.5; }
+
+  /* ── Tabs (pestañas) ── */
+  .tab-grid { display: flex; flex-direction: column; gap: 8px; }
+  .tab-item {
+    background: var(--white);
+    border: 1px solid var(--gray2);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .tab-badge {
+    background: var(--teal-lt);
+    color: var(--teal);
+    font-size: 10px; font-weight: 600;
+    padding: 3px 8px; border-radius: 20px;
+    white-space: nowrap; margin-top: 2px;
+  }
+  .tab-badge.gray { background: var(--gray3); color: var(--gray1); }
+  .tab-info { flex: 1; }
+  .tab-name { font-size: 14px; font-weight: 500; color: var(--navy); margin-bottom: 2px; }
+  .tab-desc { font-size: 12px; color: var(--gray1); line-height: 1.5; }
+
+  /* ── Alert boxes ── */
+  .alert {
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    display: flex; gap: 10px; align-items: flex-start;
+    margin-top: 10px;
+  }
+  .alert.teal   { background: var(--teal-lt); }
+  .alert.amber  { background: var(--amber-lt); }
+  .alert.green  { background: var(--green-lt); }
+  .alert.coral  { background: var(--coral-lt); }
+  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .alert p { font-size: 13px; line-height: 1.5; }
+  .alert.teal p  { color: #1A5560; }
+  .alert.amber p { color: #7A4C0E; }
+  .alert.green p { color: #1A5538; }
+  .alert.coral p { color: #8C2D25; }
+
+  /* ── Status badges ── */
+  .status {
+    display: inline-block; padding: 2px 10px;
+    border-radius: 20px; font-size: 11px; font-weight: 600;
+  }
+  .status.pending { background: var(--amber-lt); color: var(--amber); }
+  .status.done    { background: var(--green-lt); color: var(--green); }
+  .status.no      { background: var(--coral-lt); color: var(--coral); }
+  .status.na      { background: var(--gray3);    color: var(--gray1); }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center; padding: 1.5rem;
+    font-size: 11px; color: var(--gray1);
+    border-top: 1px solid var(--gray2);
+  }
+  footer a { color: var(--teal); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="top-bar">
+  <a href="index.html" class="back-link">
+    <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+    Inicio
+  </a>
+  <div class="top-divider"></div>
+  <span class="top-role">Recepción</span>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-label">Instructivo operativo</div>
+  <h1>Agenda de <strong>Citas</strong></h1>
+  <p>Todo lo que necesitas para manejar la agenda diaria de IVC Dental.</p>
+</div>
+
+<!-- Nav -->
+<div class="nav-scroll">
+  <div class="nav-inner">
+    <a href="#pestanas" class="nav-pill active">Las pestañas</a>
+    <a href="#agendar" class="nav-pill">Agendar cita</a>
+    <a href="#bloquear" class="nav-pill">Bloqueos</a>
+    <a href="#salida" class="nav-pill">Citas de salida</a>
+    <a href="#recordatorios" class="nav-pill">Recordatorios WA</a>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- ── Pestañas ── -->
+  <div class="section" id="pestanas">
+    <div class="section-head">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+      </div>
+      <div>
+        <div class="section-title">Las pestañas del archivo</div>
+        <div class="section-sub">Cada pestaña tiene un propósito específico.</div>
+      </div>
+    </div>
+
+    <div class="tab-grid">
+      <div class="tab-item">
+        <div class="tab-badge">Listado de Citas</div>
+        <div class="tab-info">
+          <div class="tab-name">Registro oficial de todas las citas</div>
+          <div class="tab-desc">No se edita manualmente. Se llena desde el Sidebar al agendar.</div>
+        </div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-badge">AGENDA</div>
+        <div class="tab-info">
+          <div class="tab-name">Vista del día en cuadrícula</div>
+          <div class="tab-desc">Muestra los 3 sillones por hora. Es solo lectura — no editar aquí.</div>
+        </div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-badge">SEMANA</div>
+        <div class="tab-info">
+          <div class="tab-name">Panorama de la semana activa</div>
+          <div class="tab-desc">Lista compacta por día. Útil para orientarse rápido.</div>
+        </div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-badge">CITAS DE SALIDA</div>
+        <div class="tab-info">
+          <div class="tab-name">Pacientes que ya terminaron consulta</div>
+          <div class="tab-desc">Aparecen solos cuando la asistente los registra. Noris agenda la próxima cita desde aquí.</div>
+        </div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-badge">RECORDATORIOS</div>
+        <div class="tab-info">
+          <div class="tab-name">Lista de WhatsApp del día siguiente</div>
+          <div class="tab-desc">Se genera sola. Noris envía el WA y marca la confirmación.</div>
+        </div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-badge gray">CALENDARIO</div>
+        <div class="tab-info">
+          <div class="tab-name">Feriados y sábados bloqueados</div>
+          <div class="tab-desc">Acá se agregan los 2 sábados del mes que no se trabajan. La agenda los detecta sola.</div>
+        </div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-badge gray">CONFIG</div>
+        <div class="tab-info">
+          <div class="tab-name">Listas de referencia — no tocar</div>
+          <div class="tab-desc">Alimenta los desplegables. Solo se modifica con autorización.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Agendar cita ── -->
+  <div class="section" id="agendar">
+    <div class="section-head">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
+      <div>
+        <div class="section-title">Cómo agendar una cita</div>
+        <div class="section-sub">Siempre desde el Sidebar — nunca en el listado directo.</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Abre la Agenda en Google Sheets.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Ve a <strong>Extensiones → IVC Agenda → Agendar cita</strong></p>
+          <div class="sub">Se abre el Sidebar en el panel derecho de la pantalla.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Selecciona la <strong>fecha</strong> y revisa los horarios disponibles.</p>
+          <div class="sub">Los bloques ocupados aparecen en gris. Los libres, disponibles para seleccionar.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Llena los campos: <strong>Paciente, Tratamiento, Doctor, Sillón, Teléfono.</strong></p>
+          <div class="sub">El campo "Notas / Alertas" es libre — úsalo para información relevante del paciente.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num">5</div><div class="step-line last"></div></div>
+        <div class="step-card">
+          <p>Haz clic en <strong>Guardar cita.</strong></p>
+          <div class="sub">La cita aparece en AGENDA y en Listado de Citas de inmediato.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert teal">
+      <div class="alert-icon">💡</div>
+      <p>Si el paciente fue agendado desde la web (autoagendado), aparece con el ícono 🌐 en la agenda. No hay que hacer nada — ya está registrado.</p>
+    </div>
+  </div>
+
+  <!-- ── Bloqueos ── -->
+  <div class="section" id="bloquear">
+    <div class="section-head">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      </div>
+      <div>
+        <div class="section-title">Cómo registrar un bloqueo</div>
+        <div class="section-sub">Para reservar tiempo sin paciente.</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-left"><div class="step-num amber">1</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>En el Sidebar, cambia el tipo de <strong>"Cita" a "Bloqueo".</strong></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num amber">2</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Elige la razón del bloqueo.</p>
+          <div class="sub">Doctora fuera · Almuerzo · Procedimiento interno · Reunión · En uso | Ortodoncia · Otro</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num amber">3</div><div class="step-line last"></div></div>
+        <div class="step-card">
+          <p>Selecciona <strong>duración, sillón</strong> y guarda.</p>
+          <div class="sub">El bloqueo aparece en la cuadrícula de ese día como 🚫 Bloqueado.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Citas de salida ── -->
+  <div class="section" id="salida">
+    <div class="section-head">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      </div>
+      <div>
+        <div class="section-title">Citas de salida</div>
+        <div class="section-sub">Lo que haces cuando el paciente pasa a pagar.</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-left"><div class="step-num green">1</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Cuando el paciente pase a pagar, abre la pestaña <strong>CITAS DE SALIDA.</strong></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num green">2</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Busca el nombre del paciente. Lee la <strong>col D</strong> (para qué cita) y <strong>col E</strong> (en cuánto tiempo).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num green">3</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Revisa el estado en la <strong>columna F:</strong></p>
+          <div class="sub" style="margin-top:8px; display:flex; flex-direction:column; gap:5px;">
+            <div><span class="status pending">⏳ Pendiente</span> → Agenda la cita en Dentalink <em>y</em> en la Agenda Google.</div>
+            <div><span class="status done">Agendada ✓</span> → Ya está hecho, no hay que hacer nada.</div>
+            <div><span class="status na">N/A — No requiere</span> → No hay próxima cita.</div>
+            <div><span class="status no">❌ No agendada</span> → El paciente se negó, no insistir.</div>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num green">4</div><div class="step-line last"></div></div>
+        <div class="step-card">
+          <p>Una vez agendada, cambia la columna F a <span class="status done">Agendada ✓</span></p>
+          <div class="sub">Si el paciente se negó, escribe el motivo y marca ❌ No agendada.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert green">
+      <div class="alert-icon">📊</div>
+      <p>Al final del día, CITAS DE SALIDA es el termómetro de fugas: <strong>verde = salió con cita, rojo = se fue sin cita, amarillo = pendiente.</strong></p>
+    </div>
+  </div>
+
+  <!-- ── Recordatorios ── -->
+  <div class="section" id="recordatorios">
+    <div class="section-head">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 12 19.79 19.79 0 01.88 3.38 2 2 0 012.86 1.21h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      </div>
+      <div>
+        <div class="section-title">Recordatorios por WhatsApp</div>
+        <div class="section-sub">Para confirmar las citas del día siguiente.</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Ve a la pestaña <strong>RECORDATORIOS.</strong></p>
+          <div class="sub">Se actualiza sola con los pacientes del día siguiente.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+        <div class="step-card">
+          <p>Haz clic en <strong>📲 Enviar WA</strong> al lado de cada nombre.</p>
+          <div class="sub">Se abre WhatsApp directamente con el mensaje listo para enviar.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-num">3</div><div class="step-line last"></div></div>
+        <div class="step-card">
+          <p>Una vez enviado, marca el resultado en la columna <strong>"Confirmación".</strong></p>
+          <div class="sub">Opciones: Confirmó · No contestó · Canceló · Reprogramó</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert amber">
+      <div class="alert-icon">⚠️</div>
+      <p>Los recordatorios se envían el día anterior, preferiblemente entre 3 pm y 6 pm. No enviar después de las 8 pm.</p>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<footer>
+  <a href="index.html">← Volver al portal</a> · IVC Dental · Uso interno
+</footer>
+
+<script>
+  const pills = document.querySelectorAll('.nav-pill');
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        pills.forEach(p => p.classList.remove('active'));
+        const active = document.querySelector(`.nav-pill[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
