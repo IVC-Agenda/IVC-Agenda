@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instructivo Asistente Clínica — IVC Dental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:     #1B3A5C;
+    --coral:    #E05A4E;
+    --coral-md: #F2B5B0;
+    --coral-lt: #FEF0EF;
+    --orange:   #C47A1A;
+    --orange-lt:#FEF3E2;
+    --teal:     #2E7D8C;
+    --teal-lt:  #E8F4F1;
+    --green:    #2E7D55;
+    --green-lt: #E8F5EF;
+    --purple:   #5B4A8C;
+    --purple-lt:#EEEDFE;
+    --bg:       #F7F9FC;
+    --white:    #FFFFFF;
+    --gray1:    #6B7A8D;
+    --gray2:    #C8D0DC;
+    --gray3:    #EEF1F5;
+    --text:     #1A2636;
+    --radius:   10px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── Top bar ── */
+  .top-bar {
+    background: var(--navy);
+    padding: 1rem 1.25rem;
+    display: flex; align-items: center; gap: 12px;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .back-link {
+    color: rgba(255,255,255,0.7); text-decoration: none;
+    font-size: 13px; display: flex; align-items: center; gap: 4px;
+  }
+  .back-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
+  .back-link:hover { color: white; }
+  .top-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.2); }
+  .top-role { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #F2B5B0; }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--coral);
+    padding: 2rem 1.5rem 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -30px; right: -20px;
+    width: 130px; height: 130px; border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .hero-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 8px; }
+  .hero h1 { font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 300; color: white; line-height: 1.2; margin-bottom: 0.5rem; }
+  .hero h1 strong { font-weight: 600; }
+  .hero p { font-size: 13px; color: rgba(255,255,255,0.75); max-width: 380px; }
+
+  /* ── Nav ── */
+  .nav-scroll {
+    background: var(--white); border-bottom: 1px solid var(--gray2);
+    overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .nav-scroll::-webkit-scrollbar { display: none; }
+  .nav-inner { display: flex; padding: 0 1rem; white-space: nowrap; min-width: max-content; }
+  .nav-pill {
+    display: inline-block; padding: 10px 16px;
+    font-size: 13px; font-weight: 500; color: var(--gray1);
+    text-decoration: none; border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .nav-pill:hover { color: var(--coral); }
+  .nav-pill.active { color: var(--coral); border-bottom-color: var(--coral); }
+
+  /* ── Content ── */
+  .content { max-width: 560px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+
+  /* ── Section ── */
+  .section { margin-bottom: 2.5rem; scroll-margin-top: 100px; }
+  .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--gray2); }
+  .section-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--coral-lt); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-icon svg { width: 17px; height: 17px; stroke: var(--coral); fill: none; stroke-width: 2; }
+  .section-icon.green-icon { background: var(--green-lt); }
+  .section-icon.green-icon svg { stroke: var(--green); }
+  .section-icon.navy-icon { background: #E5EAF0; }
+  .section-icon.navy-icon svg { stroke: var(--navy); }
+  .section-title { font-size: 15px; font-weight: 600; color: var(--navy); }
+  .section-sub { font-size: 12px; color: var(--gray1); margin-top: 1px; }
+
+  /* ── Tab grid ── */
+  .tab-grid { display: flex; flex-direction: column; gap: 8px; }
+  .tab-item { background: var(--white); border: 1px solid var(--gray2); border-radius: var(--radius); padding: 10px 14px; display: flex; align-items: flex-start; gap: 12px; }
+  .tab-badge { background: var(--coral-lt); color: var(--coral); font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 20px; white-space: nowrap; margin-top: 2px; }
+  .tab-badge.gray { background: var(--gray3); color: var(--gray1); }
+  .tab-info { flex: 1; }
+  .tab-name { font-size: 14px; font-weight: 500; color: var(--navy); margin-bottom: 2px; }
+  .tab-desc { font-size: 12px; color: var(--gray1); line-height: 1.5; }
+
+  /* ── Column steps (for 12 columns) ── */
+  .col-steps { display: flex; flex-direction: column; gap: 6px; }
+  .col-step {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: var(--white); border: 1px solid var(--gray2);
+    border-radius: var(--radius); padding: 10px 14px;
+    position: relative;
+  }
+  .col-step.critical { border-left: 3px solid var(--coral); }
+  .col-step.final    { border-left: 3px solid var(--navy); }
+  .col-letter {
+    min-width: 26px; height: 26px; border-radius: 6px;
+    background: var(--coral-lt); color: var(--coral);
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .col-letter.critical { background: var(--coral); color: white; }
+  .col-letter.final    { background: var(--navy); color: white; }
+  .col-body { flex: 1; }
+  .col-label { font-size: 11px; font-weight: 600; color: var(--gray1); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+  .col-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+  .col-sub { font-size: 12px; color: var(--gray1); margin-top: 3px; line-height: 1.5; }
+
+  /* ── Auto steps ── */
+  .auto-steps { display: flex; flex-direction: column; gap: 8px; }
+  .auto-step {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--teal-lt); border-radius: var(--radius); padding: 10px 14px;
+  }
+  .auto-bolt { font-size: 18px; flex-shrink: 0; }
+  .auto-text { font-size: 14px; color: #1A5560; line-height: 1.5; }
+  .auto-text strong { color: #0F3D45; }
+
+  /* ── Alert boxes ── */
+  .alert { border-radius: var(--radius); padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start; margin-top: 10px; }
+  .alert.coral  { background: var(--coral-lt); }
+  .alert.orange { background: var(--orange-lt); }
+  .alert.green  { background: var(--green-lt); }
+  .alert.navy   { background: #E5EAF0; }
+  .alert-icon   { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .alert p      { font-size: 13px; line-height: 1.5; }
+  .alert.coral p  { color: #8C2D25; }
+  .alert.orange p { color: #7A4C0E; }
+  .alert.green p  { color: #1A5538; }
+  .alert.navy p   { color: #1B3A5C; }
+
+  /* ── Connection grid ── */
+  .conn-grid { display: flex; flex-direction: column; gap: 8px; }
+  .conn-item {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--white); border: 1px solid var(--gray2);
+    border-radius: var(--radius); padding: 10px 14px;
+  }
+  .conn-arrow { font-size: 18px; }
+  .conn-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+  .conn-text strong { color: var(--navy); }
+  .conn-sub { font-size: 12px; color: var(--gray1); margin-top: 2px; }
+
+  /* ── Golden rule ── */
+  .golden {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    color: white;
+    text-align: center;
+  }
+  .golden .g-icon { font-size: 28px; margin-bottom: 8px; }
+  .golden p { font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.9); }
+  .golden p strong { color: white; font-weight: 600; }
+
+  /* ── Footer ── */
+  footer { text-align: center; padding: 1.5rem; font-size: 11px; color: var(--gray1); border-top: 1px solid var(--gray2); }
+  footer a { color: var(--coral); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="top-bar">
+  <a href="index.html" class="back-link">
+    <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+    Inicio
+  </a>
+  <div class="top-divider"></div>
+  <span class="top-role">Asistente clínica</span>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-label">Instructivo operativo</div>
+  <h1>Registro <strong>Clínico Diario</strong></h1>
+  <p>Todo lo que necesitas saber para registrar cada paciente correctamente.</p>
+</div>
+
+<!-- Nav -->
+<div class="nav-scroll">
+  <div class="nav-inner">
+    <a href="#pestanas" class="nav-pill active">Las pestañas</a>
+    <a href="#columnas" class="nav-pill">Las 12 columnas</a>
+    <a href="#automatico" class="nav-pill">Qué pasa solo</a>
+    <a href="#conexiones" class="nav-pill">Conexiones</a>
+    <a href="#regla" class="nav-pill">Regla de oro</a>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- ── Pestañas ── -->
+  <div class="section" id="pestanas">
+    <div class="section-head">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+      </div>
+      <div>
+        <div class="section-title">Las pestañas del archivo</div>
+        <div class="section-sub">Cuatro pestañas — solo trabajas en una.</div>
+      </div>
+    </div>
+
+    <div class="tab-grid">
+      <div class="tab-item">
+        <div class="tab-badge">REGISTRO DIARIO</div>
+        <div class="tab-info">
+          <div class="tab-name">Aquí trabajas tú</div>
+          <div class="tab-desc">Llenas una fila por cada paciente atendido. Solo aparecen los pacientes con cita agendada para hoy.</div>
+        </div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-badge">AGENDA DEL DÍA</div>
+        <div class="tab-info">
+          <div class="tab-name">Se carga sola a las 6:30 am</div>
+          <div class="tab-desc">Trae los pacientes del día desde la Agenda de Citas. Alimenta el desplegable del Registro.</div>
+        </div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-badge">HISTORIAL</div>
+        <div class="tab-info">
+          <div class="tab-name">Registro acumulativo — no editar</div>
+          <div class="tab-desc">Se llena automáticamente al marcar "Enviado". Capacidad hasta 2,000 registros. No tocar manualmente.</div>
+        </div>
+      </div>
+      <div class="tab-item">
+        <div class="tab-badge gray">LISTAS</div>
+        <div class="tab-info">
+          <div class="tab-name">Configuración — no modificar</div>
+          <div class="tab-desc">Tratamientos y condiciones para los desplegables. Solo cambia con autorización.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Las 12 columnas ── -->
+  <div class="section" id="columnas">
+    <div class="section-head">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      </div>
+      <div>
+        <div class="section-title">Las columnas del registro</div>
+        <div class="section-sub">Llena en orden, de izquierda a derecha.</div>
+      </div>
+    </div>
+
+    <div class="col-steps">
+      <div class="col-step">
+        <div class="col-letter">B</div>
+        <div class="col-body">
+          <div class="col-label">Paciente</div>
+          <div class="col-text">Selecciona el nombre desde el desplegable.</div>
+          <div class="col-sub">El sistema marca "Asistió" en la Agenda y crea la fila en CITAS DE SALIDA automáticamente.</div>
+        </div>
+      </div>
+      <div class="col-step">
+        <div class="col-letter">C</div>
+        <div class="col-body">
+          <div class="col-label">Tratamiento</div>
+          <div class="col-text">Selecciona el tratamiento realizado en la lista.</div>
+        </div>
+      </div>
+      <div class="col-step">
+        <div class="col-letter">D</div>
+        <div class="col-body">
+          <div class="col-label">Detalle / tratamiento adicional</div>
+          <div class="col-text">Campo libre. Describe lo que se hizo o cualquier cosa adicional.</div>
+        </div>
+      </div>
+      <div class="col-step">
+        <div class="col-letter">E</div>
+        <div class="col-body">
+          <div class="col-label">Atendido por</div>
+          <div class="col-text">¿Quién realizó el procedimiento?</div>
+        </div>
+      </div>
+      <div class="col-step">
+        <div class="col-letter">F</div>
+        <div class="col-body">
+          <div class="col-label">Condición encontrada</div>
+          <div class="col-text">Estado del paciente: sensibilidad, caries activa, sin novedad, etc.</div>
+        </div>
+      </div>
+      <div class="col-step">
+        <div class="col-letter">G</div>
+        <div class="col-body">
+          <div class="col-label">Evolución / notas clínicas</div>
+          <div class="col-text">Observaciones del procedimiento. Cómo quedó el paciente.</div>
+        </div>
+      </div>
+      <div class="col-step">
+        <div class="col-letter">H</div>
+        <div class="col-body">
+          <div class="col-label">Medicación indicada</div>
+          <div class="col-text">Si se indicó algún medicamento, escríbelo aquí.</div>
+        </div>
+      </div>
+      <div class="col-step">
+        <div class="col-letter">I</div>
+        <div class="col-body">
+          <div class="col-label">¿Qué sigue?</div>
+          <div class="col-text">Próximo paso clínico. Ej: "Radiografía pendiente", "Segunda cita de resina".</div>
+        </div>
+      </div>
+      <div class="col-step">
+        <div class="col-letter">J</div>
+        <div class="col-body">
+          <div class="col-label">Próxima cita para qué</div>
+          <div class="col-text">Nombre del tratamiento de la próxima cita. Lo que verá Noris para agendar.</div>
+        </div>
+      </div>
+      <div class="col-step">
+        <div class="col-letter">K</div>
+        <div class="col-body">
+          <div class="col-label">¿En cuánto tiempo?</div>
+          <div class="col-text">Ej: "1 semana", "3 meses", "Al terminar el tratamiento".</div>
+        </div>
+      </div>
+      <div class="col-step critical">
+        <div class="col-letter critical">L</div>
+        <div class="col-body">
+          <div class="col-label">¿Cita agendada? — Instrucción para recepción</div>
+          <div class="col-text">Selecciona "Sí — agendar antes de salir" o "No requiere".</div>
+          <div class="col-sub">Cuando llenas esta columna, CITAS DE SALIDA en la Agenda se actualiza automáticamente para que Noris sepa qué hacer.</div>
+        </div>
+      </div>
+      <div class="col-step final">
+        <div class="col-letter final">Q</div>
+        <div class="col-body">
+          <div class="col-label">Enviado a SO — último paso</div>
+          <div class="col-text">Cuando la fila esté completa, selecciona "Enviado".</div>
+          <div class="col-sub">Esto guarda el registro en el Historial y lo envía al Sistema Operativo. Es permanente — no se puede deshacer.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Qué pasa automáticamente ── -->
+  <div class="section" id="automatico">
+    <div class="section-head">
+      <div class="section-icon green-icon">
+        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <div>
+        <div class="section-title">Qué pasa sin que hagas nada</div>
+        <div class="section-sub">El sistema hace esto por ti en cada paso.</div>
+      </div>
+    </div>
+
+    <div class="auto-steps">
+      <div class="auto-step">
+        <div class="auto-bolt">⏰</div>
+        <div class="auto-text"><strong>A las 6:30 am</strong> — AGENDA DEL DÍA se carga sola con los pacientes de hoy.</div>
+      </div>
+      <div class="auto-step">
+        <div class="auto-bolt">⚡</div>
+        <div class="auto-text">Al <strong>seleccionar el paciente (col B)</strong> — se marca "Asistió" en la Agenda y aparece en CITAS DE SALIDA de Noris.</div>
+      </div>
+      <div class="auto-step">
+        <div class="auto-bolt">⚡</div>
+        <div class="auto-text">Al <strong>llenar col L</strong> — CITAS DE SALIDA se actualiza con la instrucción para que Noris la vea al cobrar.</div>
+      </div>
+      <div class="auto-step">
+        <div class="auto-bolt">✅</div>
+        <div class="auto-text">Al <strong>marcar "Enviado" (col Q)</strong> — el registro se copia al Historial y al Sistema Operativo.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Conexiones ── -->
+  <div class="section" id="conexiones">
+    <div class="section-head">
+      <div class="section-icon navy-icon">
+        <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+      </div>
+      <div>
+        <div class="section-title">Cómo se conecta con otros archivos</div>
+        <div class="section-sub">Este archivo no trabaja solo.</div>
+      </div>
+    </div>
+
+    <div class="conn-grid">
+      <div class="conn-item">
+        <div class="conn-arrow">📥</div>
+        <div>
+          <div class="conn-text"><strong>Lee de</strong> la Agenda de Citas</div>
+          <div class="conn-sub">Para traer los pacientes del día a AGENDA DEL DÍA cada mañana.</div>
+        </div>
+      </div>
+      <div class="conn-item">
+        <div class="conn-arrow">📤</div>
+        <div>
+          <div class="conn-text"><strong>Escribe en</strong> la Agenda de Citas</div>
+          <div class="conn-sub">Actualiza el status "Asistió" y llena CITAS DE SALIDA para Noris.</div>
+        </div>
+      </div>
+      <div class="conn-item">
+        <div class="conn-arrow">📤</div>
+        <div>
+          <div class="conn-text"><strong>Escribe en</strong> el Sistema Operativo</div>
+          <div class="conn-sub">Hoja REGISTRO_CLINICO — donde la coordinación ve el resumen de cada paciente atendido.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Regla de oro ── -->
+  <div class="section" id="regla">
+    <div class="section-head">
+      <div class="section-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div>
+        <div class="section-title">La regla de oro</div>
+      </div>
+    </div>
+
+    <div class="golden">
+      <div class="g-icon">🦷</div>
+      <p>Llena la fila <strong>al terminar cada paciente</strong>, antes de pasar al siguiente.<br><br>Si esperas al final del día, pierdes los detalles clínicos — y eso afecta la calidad del historial.</p>
+    </div>
+
+    <div class="alert orange" style="margin-top: 12px;">
+      <div class="alert-icon">⚠️</div>
+      <p>Solo pueden registrarse pacientes que aparecen en la lista del desplegable (col B). Si un paciente no aparece, avisa a recepción para que verifique el agendamiento.</p>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<footer>
+  <a href="index.html">← Volver al portal</a> · IVC Dental · Uso interno
+</footer>
+
+<script>
+  const pills = document.querySelectorAll('.nav-pill');
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        pills.forEach(p => p.classList.remove('active'));
+        const active = document.querySelector(`.nav-pill[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
