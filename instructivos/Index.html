@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IVC Dental — Instructivos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #1B3A5C;
+    --teal:    #2E7D8C;
+    --teal-lt: #E8F4F1;
+    --ice:     #F0F4FF;
+    --coral:   #E05A4E;
+    --bg:      #F7F9FC;
+    --white:   #FFFFFF;
+    --gray1:   #6B7A8D;
+    --gray2:   #C8D0DC;
+    --text:    #1A2636;
+    --radius:  12px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--navy);
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+  }
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+  .logo-tooth {
+    width: 36px; height: 36px;
+    background: var(--teal);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-tooth svg { width: 20px; height: 20px; fill: white; }
+  .logo-name {
+    font-size: 14px; font-weight: 600; letter-spacing: 0.12em;
+    color: white; text-transform: uppercase;
+  }
+  header h1 {
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    font-weight: 300;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  header h1 strong { font-weight: 600; }
+  header p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    max-width: 360px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── Main ── */
+  main {
+    flex: 1;
+    padding: 2.5rem 1.25rem;
+    max-width: 520px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray1);
+    margin-bottom: 1rem;
+  }
+
+  /* ── Role Cards ── */
+  .cards { display: flex; flex-direction: column; gap: 16px; margin-bottom: 2.5rem; }
+
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--gray2);
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+  .card:hover {
+    box-shadow: 0 6px 20px rgba(27,58,92,0.1);
+    transform: translateY(-2px);
+  }
+  .card:active { transform: scale(0.99); }
+
+  .card-accent {
+    height: 4px;
+  }
+  .card-accent.teal { background: var(--teal); }
+  .card-accent.coral { background: var(--coral); }
+
+  .card-body { padding: 1.25rem 1.5rem 1.5rem; }
+
+  .card-role {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .card-role.teal { color: var(--teal); }
+  .card-role.coral { color: var(--coral); }
+
+  .card-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .card-topics {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1.25rem;
+  }
+  .card-topics li {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--teal-lt);
+    color: var(--teal);
+    font-weight: 500;
+  }
+  .card-topics li.c { background: #FEF0EF; color: var(--coral); }
+
+  .card-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .card-cta svg { width: 18px; height: 18px; stroke: var(--gray1); }
+
+  /* ── Footer ── */
+  footer {
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 11px;
+    color: var(--gray1);
+    border-top: 1px solid var(--gray2);
+  }
+  footer span { color: var(--teal); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">
+    <div class="logo-tooth">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C9.2 2 7 3.8 5.5 5.5 4.5 6.7 4 8.2 4 9.5c0 2 .8 3.8 1.5 5.5.8 2 1.5 4.5 2 6.5.3 1.1.9 1.5 1.5 1.5s1-.4 1.3-1.2L12 17l1.7 4.8c.3.8.7 1.2 1.3 1.2s1.2-.4 1.5-1.5c.5-2 1.2-4.5 2-6.5.7-1.7 1.5-3.5 1.5-5.5 0-1.3-.5-2.8-1.5-4C18 3.8 15.8 2 12 2z"/>
+      </svg>
+    </div>
+    <span class="logo-name">IVC Dental</span>
+  </div>
+  <h1>Portal de <strong>instructivos</strong></h1>
+  <p>Selecciona tu área para ver los pasos de tu trabajo.</p>
+</header>
+
+<main>
+  <p class="section-label">Elige tu área</p>
+
+  <div class="cards">
+
+    <!-- Noris -->
+    <a href="noris.html" class="card">
+      <div class="card-accent teal"></div>
+      <div class="card-body">
+        <div class="card-role teal">Recepción</div>
+        <div class="card-name">Instructivo — Noris</div>
+        <ul class="card-topics">
+          <li>Agendar cita</li>
+          <li>Bloqueos</li>
+          <li>Citas de salida</li>
+          <li>Recordatorios WA</li>
+          <li>Pestañas del archivo</li>
+        </ul>
+        <div class="card-cta">
+          Ver instructivo
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </div>
+    </a>
+
+    <!-- Yarilsa -->
+    <a href="yarilsa.html" class="card">
+      <div class="card-accent coral"></div>
+      <div class="card-body">
+        <div class="card-role coral">Asistente clínica</div>
+        <div class="card-name">Instructivo — Yarilsa</div>
+        <ul class="card-topics">
+          <li class="c">Registro diario</li>
+          <li class="c">12 columnas paso a paso</li>
+          <li class="c">Qué pasa automático</li>
+          <li class="c">Regla de oro</li>
+        </ul>
+        <div class="card-cta">
+          Ver instructivo
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <p style="font-size:12px; color:var(--gray1); text-align:center; line-height:1.7;">
+    Estos instructivos son de consulta rápida.<br>
+    Para cambios en el sistema, contacta a la coordinación.
+  </p>
+</main>
+
+<footer>
+  IVC Dental · <span>Clínica Dra. Ingrid Vargas</span> · Uso interno
+</footer>
+
+</body>
+</html>
