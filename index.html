@@ -54,9 +54,9 @@ body {
 }
 .header-logo { display: flex; align-items: center; justify-content: center; gap: 10px; }
 .header-marca { display: flex; flex-direction: column; align-items: flex-start; }
-.header-ivc { font-family: var(--font-display); font-size: 1.7rem; font-weight: 600; color: var(--rojo); letter-spacing: 0.06em; line-height: 1; }
+.header-ivc { font-family: var(--font-display); font-size: 1.7rem; font-weight: 0; color: var(--rojo); letter-spacing: 0.06em; line-height: 1; }
 .header-sub { font-size: 0.65rem; font-weight: 500; color: var(--negro); letter-spacing: 0.20em; text-transform: uppercase; margin-top: 2px; }
-.logo-placeholder { width: 38px; height: 38px; border-radius: 50%; background: var(--rojo-soft); border: 2px solid var(--rojo); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--rojo); flex-shrink: 0; }
+.logo-placeholder { width: 38px; height: 38px; border-radius: 50%; background: var(--rojo-soft); border: 2px solid var(--rojo); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1rem; font-weight: 0; color: var(--rojo); flex-shrink: 0; }
 .container { max-width: 520px; margin: 0 auto; padding: 16px 14px 48px; }
 .pasos { display: flex; align-items: center; justify-content: center; margin-bottom: 16px; padding: 0 4px; }
 .paso-item { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
@@ -241,7 +241,7 @@ body {
     </div>
     <div class="campo-grupo">
       <label class="campo-label">Indicaciones para la doctora (opcional)</label>
-      <textarea class="campo-input" id="inputNotas" rows="3" placeholder="Ej. Soy alérgico a la penicilina, vengo referido por..."></textarea>
+      <textarea class="campo-input" id="inputNotas" rows="3" placeholder="Ej. Soy alérgico a la penicilina, vengo referido por, requiero cita para..."></textarea>
     </div>
     <div class="resumen-box" id="resumenCita"></div>
     <div id="errorFormulario" class="alerta-error"></div>
@@ -264,7 +264,7 @@ body {
       </div>
       <div id="confirmResumen" class="resumen-box"></div>
       <div class="pago-box" style="margin-top:16px;text-align:left;">
-        <div class="pago-titulo">💳 ¿Quieres un descuento de $10 en tu cita?</div>
+        <div class="pago-titulo">💳 ¿Quieres un descuento de $15 en tu cita?</div>
         <p class="pago-desc">Separa tu cita con un abono de <strong>$10 en línea</strong> y ese monto te lo descontamos del total el día de tu visita. Pagas menos y tu cita queda asegurada.</p>
         <a id="linkBAC" href="https://checkout.baccredomatic.com/NDk3NmY2MTNhMTllMjA1NzU3MWIuYjIxNzgxMTAxNjYy" target="_blank" class="btn-bac">Abonar $10 con tarjeta (Visa / Mastercard) →</a>
         <p style="font-size:0.70rem;color:var(--gris-4);text-align:center;margin-top:8px;">Si abonas, envíanos la captura al <a href="https://wa.me/50768463895" target="_blank" style="color:var(--rojo-deep);font-weight:600;">WhatsApp de la clínica</a> para registrar tu descuento.</p>
@@ -284,8 +284,8 @@ const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyfejUoRv3-JgTkz1Ui
 
 const SERVICIOS = {
   nuevo: [
-    { id: 'consulta_valoracion',       nombre: 'Consulta de Valoración',      desc: 'Evaluación completa · El monto se abona al tratamiento', precio: '$60', icono: '🔍', duracion: 60 },
-    { id: 'paquete_consulta_limpieza', nombre: 'Paquete Consulta + Limpieza', desc: 'Consulta inicial incluye limpieza dental',               precio: '$45', icono: '✨', duracion: 60 },
+    { id: 'consulta_valoracion',       nombre: 'Consulta de Valoración',      desc: 'Evaluación completa · El monto se abona al tratamiento', precio: '$65', icono: '🔍', duracion: 60 },
+    { id: 'paquete_consulta_limpieza', nombre: 'Paquete Consulta + Limpieza', desc: 'Consulta inicial incluye limpieza dental',               precio: '$60', icono: '✨', duracion: 60 },
   ],
   existente: [
     { id: 'limpieza_profilaxis', nombre: 'Limpieza / Profilaxis',  desc: 'Limpieza dental profesional',                    precio: '', icono: '🦷', duracion: 60 },
