@@ -263,12 +263,7 @@ body {
         <span>Tu cita está <strong>pendiente de confirmación</strong>. Te enviaremos un mensaje de WhatsApp para confirmarla en horario de atención (Lun–Vie 8am–6pm, Sáb 8am–2pm).</span>
       </div>
       <div id="confirmResumen" class="resumen-box"></div>
-      <div class="pago-box" style="margin-top:16px;text-align:left;">
-        <div class="pago-titulo">💳 ¿Quieres un descuento de $15 en tu cita?</div>
-        <p class="pago-desc">Separa tu cita con un abono de <strong>$10 en línea</strong> y ese monto te lo descontamos del total el día de tu visita. Pagas menos y tu cita queda asegurada.</p>
-        <a id="linkBAC" href="https://checkout.baccredomatic.com/NDk3NmY2MTNhMTllMjA1NzU3MWIuYjIxNzgxMTAxNjYy" target="_blank" class="btn-bac">Abonar $10 con tarjeta (Visa / Mastercard) →</a>
-        <p style="font-size:0.70rem;color:var(--gris-4);text-align:center;margin-top:8px;">Si abonas, envíanos la captura al <a href="https://wa.me/50768463895" target="_blank" style="color:var(--rojo-deep);font-weight:600;">WhatsApp de la clínica</a> para registrar tu descuento.</p>
-      </div>
+      <div id="pagoBoxContainer"></div>
     </div>
   </section>
 </main>
@@ -282,14 +277,57 @@ body {
 <script>
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyfejUoRv3-JgTkz1UiQ3m85fD4JFedJ7LWNrAfD4SPboTpVl7XB_1IdA37zYLnEWYziQ/exec';
 
+const WHATSAPP_CLINICA = 'https://wa.me/50768463895';
+const CIERRE_PAGO_ESTANDAR = 'Si pagas, envíanos la captura al <a href="' + WHATSAPP_CLINICA + '" target="_blank" style="color:var(--rojo-deep);font-weight:600;">WhatsApp de la clínica</a> para registrar tu descuento.';
+const CIERRE_PAGO_FAMILIAR = 'Envíanos la captura de pago junto con <strong>nombre, apellido y celular</strong> del familiar que traerás, al <a href="' + WHATSAPP_CLINICA + '" target="_blank" style="color:var(--rojo-deep);font-weight:600;">WhatsApp de la clínica</a>.';
+
 const SERVICIOS = {
   nuevo: [
-    { id: 'consulta_valoracion',       nombre: 'Consulta de Valoración',      desc: 'Evaluación completa · El monto se abona al tratamiento', precio: '$65', icono: '🔍', duracion: 60 },
-    { id: 'paquete_consulta_limpieza', nombre: 'Paquete Consulta + Limpieza', desc: 'Consulta inicial incluye limpieza dental',               precio: '$60', icono: '✨', duracion: 60 },
+    { id: 'consulta_valoracion', nombre: 'Consulta de Valoración', desc: 'Evaluación completa · El monto se abona al tratamiento', precio: '$60', icono: '🔍', duracion: 60,
+      pago: {
+        activo: true,
+        titulo: '💳 ¿Quieres un descuento de $10 en tu cita?',
+        desc: 'Abona <strong>$10 en línea</strong> y ese monto te lo descontamos del total el día de tu visita. Pagas menos y tu cita queda asegurada.',
+        boton: 'Abonar $10 con tarjeta (Visa / Mastercard) →',
+        link: 'https://checkout.baccredomatic.com/ZDU4N2FkMzk2ODRjLjI0MjYyMDZkMWMxNzgzMzg4NjM3',
+        cierre: CIERRE_PAGO_ESTANDAR
+      }
+    },
+    { id: 'paquete_consulta_limpieza', nombre: 'Paquete Consulta + Limpieza', desc: 'Consulta inicial incluye limpieza dental', precio: '$60', icono: '✨', duracion: 60,
+      pago: {
+        activo: true,
+        titulo: '💳 ¿Quieres un descuento de $15 en tu cita?',
+        desc: 'Paga <strong>en línea</strong> y obtén $15 de descuento en tu paquete. Tu cita queda confirmada al instante.',
+        boton: 'Pagar con descuento (Visa / Mastercard) →',
+        link: 'https://checkout.baccredomatic.com/NWFjYTM0MDVkNDQ0Ni40ZTk2MDU4ODAxNzgzMzg4OTA1',
+        cierre: CIERRE_PAGO_ESTANDAR
+      }
+    },
   ],
   existente: [
-    { id: 'limpieza_profilaxis', nombre: 'Limpieza / Profilaxis',  desc: 'Limpieza dental profesional',                    precio: '', icono: '🦷', duracion: 60 },
-    { id: 'consulta_control',   nombre: 'Consulta y/o Control',     desc: 'Evaluación o seguimiento de tratamiento',        precio: '', icono: '📋', duracion: 60 },
+    { id: 'limpieza_profilaxis', nombre: 'Limpieza Dental', desc: 'Limpieza dental profesional', precio: '', icono: '🦷', duracion: 60,
+      pago: {
+        activo: true,
+        titulo: '👨‍👩‍👧 Oferta familiar · por tiempo limitado',
+        desc: 'Trae a un familiar: <strong>2 Limpiezas Dentales por $80</strong>. Aprovecha antes de que termine la promoción.',
+        boton: 'Aprovechar oferta familiar $80 →',
+        link: 'https://checkout.baccredomatic.com/NjUyMDc0Ni5jOTJhMDllM2Q3MGI2MGUxNzgzMzg5MTY2',
+        cierre: CIERRE_PAGO_FAMILIAR
+      }
+    },
+    { id: 'consulta_control', nombre: 'Consulta y/o Control', desc: 'Evaluación o seguimiento de tratamiento', precio: '', icono: '📋', duracion: 60,
+      pago: { activo: false }
+    },
+    { id: 'limpieza_blanqueamiento', nombre: 'Limpieza + Blanqueamiento', desc: 'Limpieza dental profesional + blanqueamiento', precio: '$180', icono: '✨', duracion: 90,
+      pago: {
+        activo: true,
+        titulo: '💳 Precio especial en línea',
+        desc: 'Regular <strong>$240</strong> · Pagando en línea, <strong>$180</strong>.',
+        boton: 'Pagar $180 con tarjeta (Visa / Mastercard) →',
+        link: 'https://checkout.baccredomatic.com/YzYwLjc2MGU0N2E1NDQ5MjE0MzEzMjIxNzgzMzg3OTUw',
+        cierre: CIERRE_PAGO_ESTANDAR
+      }
+    },
   ],
 };
 
@@ -559,8 +597,22 @@ function mostrarConfirmacion(data) {
     '<div class="resumen-fila"><span class="resumen-clave">Servicio</span><span class="resumen-valor">' + (data.servicio || '') + '</span></div>' +
     '<div class="resumen-fila"><span class="resumen-clave">Fecha</span><span class="resumen-valor">' + (data.fecha ? formatFechaLegible(data.fecha) : '') + '</span></div>' +
     '<div class="resumen-fila"><span class="resumen-clave">Hora</span><span class="resumen-valor">' + (data.hora ? formatHoraAmPm(data.hora) : '') + '</span></div>';
+  renderizarPagoBox();
   document.getElementById('indicadorPasos').style.display = 'none';
   irAPaso(5);
+}
+
+function renderizarPagoBox() {
+  const cont = document.getElementById('pagoBoxContainer');
+  const pago = estado.servicio && estado.servicio.pago;
+  if (!pago || !pago.activo) { cont.innerHTML = ''; return; }
+  cont.innerHTML =
+    '<div class="pago-box" style="margin-top:16px;text-align:left;">' +
+      '<div class="pago-titulo">' + pago.titulo + '</div>' +
+      '<p class="pago-desc">' + pago.desc + '</p>' +
+      '<a href="' + pago.link + '" target="_blank" class="btn-bac">' + pago.boton + '</a>' +
+      '<p style="font-size:0.70rem;color:var(--gris-4);text-align:center;margin-top:8px;">' + pago.cierre + '</p>' +
+    '</div>';
 }
 
 // ── Utilidades ──────────────────────────────────────────────
