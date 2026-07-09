@@ -318,7 +318,7 @@ const SERVICIOS = {
     { id: 'consulta_control', nombre: 'Consulta y/o Control', desc: 'Evaluación o seguimiento de tratamiento', precio: '', icono: '📋', duracion: 60,
       pago: { activo: false }
     },
-    { id: 'limpieza_blanqueamiento', nombre: 'Limpieza + Blanqueamiento', desc: 'Limpieza dental profesional + blanqueamiento', precio: '$180', icono: '✨', duracion: 90,
+    { id: 'limpieza_blanqueamiento', nombre: 'Limpieza + Blanqueamiento', desc: '🔥 Oferta por tiempo limitado · Regular $240', precio: '$180', icono: '✨', duracion: 90,
       pago: {
         activo: true,
         titulo: '💳 Precio especial en línea',
@@ -567,7 +567,7 @@ async function confirmarCita() {
   try {
    const resp = await fetch(WEB_APP_URL, {
   method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+  headers: { 'Content-Type': 'text/plain;charset=utf-8' },
   body: JSON.stringify(payload),
   redirect: 'follow'
 });
