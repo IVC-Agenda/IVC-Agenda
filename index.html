@@ -286,8 +286,12 @@ const SERVICIOS = {
     { id: 'consulta_valoracion', nombre: 'Consulta de Valoración', desc: 'Evaluación completa · El monto se abona al tratamiento', precio: '$60', icono: '🔍', duracion: 60,
       pago: {
         activo: true,
-        titulo: '💳 ¿Quieres un descuento de $10 en tu cita?',
-        desc: 'Abona <strong>$10 en línea</strong> y ese monto te lo descontamos del total el día de tu visita. Pagas menos y tu cita queda asegurada.',
+        titulo: '💳 Paga $10 hoy y ahorra $10 en tu cita',
+        desc: 'Precio regular: <strong>$60</strong><br>' +
+              'Abono en línea (hoy): <strong>$10</strong><br>' +
+              'Descuento adicional por pagar en línea: <strong>$10</strong><br>' +
+              'Pagas el día de tu cita: <strong>$40</strong><br>' +
+              '<span style="color:var(--rojo-deep);font-weight:700;">Total de tu cita: $50</span>',
         boton: 'Abonar $10 con tarjeta (Visa / Mastercard) →',
         link: 'https://checkout.baccredomatic.com/ZDU4N2FkMzk2ODRjLjI0MjYyMDZkMWMxNzgzMzg4NjM3',
         cierre: CIERRE_PAGO_ESTANDAR
@@ -296,9 +300,13 @@ const SERVICIOS = {
     { id: 'paquete_consulta_limpieza', nombre: 'Paquete Consulta + Limpieza', desc: 'Consulta inicial incluye limpieza dental', precio: '$60', icono: '✨', duracion: 60,
       pago: {
         activo: true,
-        titulo: '💳 ¿Quieres un descuento de $15 en tu cita?',
-        desc: 'Paga <strong>en línea</strong> y obtén $15 de descuento en tu paquete. Tu cita queda confirmada al instante.',
-        boton: 'Pagar con descuento (Visa / Mastercard) →',
+        titulo: '💳 Paga $15 hoy y ahorra $15 en tu cita',
+        desc: 'Precio regular: <strong>$60</strong><br>' +
+              'Abono en línea (hoy): <strong>$15</strong><br>' +
+              'Descuento adicional por pagar en línea: <strong>$15</strong><br>' +
+              'Pagas el día de tu cita: <strong>$30</strong><br>' +
+              '<span style="color:var(--rojo-deep);font-weight:700;">Total de tu cita: $45</span>',
+        boton: 'Abonar $15 con tarjeta (Visa / Mastercard) →',
         link: 'https://checkout.baccredomatic.com/NWFjYTM0MDVkNDQ0Ni40ZTk2MDU4ODAxNzgzMzg4OTA1',
         cierre: CIERRE_PAGO_ESTANDAR
       }
@@ -309,7 +317,7 @@ const SERVICIOS = {
       pago: {
         activo: true,
         titulo: '👨‍👩‍👧 Oferta familiar · por tiempo limitado',
-        desc: 'Trae a un familiar: <strong>2 Limpiezas Dentales por $80</strong>. Aprovecha antes de que termine la promoción.',
+        desc: 'Trae a un familiar: <strong>2 Limpiezas Dentales por $80</strong> pagando en línea ahora. Si no tomas la oferta en este momento, cada limpieza se cobra a precio regular el día de la cita.',
         boton: 'Aprovechar oferta familiar $80 →',
         link: 'https://checkout.baccredomatic.com/NjUyMDc0Ni5jOTJhMDllM2Q3MGI2MGUxNzgzMzg5MTY2',
         cierre: CIERRE_PAGO_FAMILIAR
@@ -322,7 +330,7 @@ const SERVICIOS = {
       pago: {
         activo: true,
         titulo: '💳 Precio especial en línea',
-        desc: 'Regular <strong>$240</strong> · Pagando en línea, <strong>$180</strong>.',
+        desc: 'Regular <strong>$240</strong> · Pagando en línea ahora, <strong>$180</strong>. Si no pagas en este momento, se cobra el valor regular el día de la cita.',
         boton: 'Pagar $180 con tarjeta (Visa / Mastercard) →',
         link: 'https://checkout.baccredomatic.com/YzYwLjc2MGU0N2E1NDQ5MjE0MzEzMjIxNzgzMzg3OTUw',
         cierre: CIERRE_PAGO_ESTANDAR
